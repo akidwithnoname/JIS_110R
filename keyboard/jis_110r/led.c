@@ -19,45 +19,89 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "stdint.h"
 #include "led.h"
 
-
+// STANDARD HID LED -------------------------------------------
 void led_set(uint8_t usb_led)
 {
+// NUM LOCK
     if (usb_led & (1<<USB_LED_NUM_LOCK))
     {
-        // Output high.
         DDRE |= (1<<7);
         PORTE |= (1<<7);
     }
     else
     {
-        // Output low.
         DDRE &= ~(1<<7);
         PORTE &= ~(1<<7);
     }
 
+// SCROLL LOCK
     if (usb_led & (1<<USB_LED_SCROLL_LOCK))
     {
-        // Output high.
-        DDRE |= (1<<0);
-        PORTE |= (1<<0);
+        DDRA |= (1<<1);
+        PORTA |= (1<<1);
     }
     else
     {
-        // Output low.
-        DDRE &= ~(1<<0);
-        PORTE &= ~(1<<0);
+        DDRA &= ~(1<<1);
+        PORTA &= ~(1<<1);
     }
 
+// CAPS LOCK
     if (usb_led & (1<<USB_LED_CAPS_LOCK))
     {
-        // Output high.
         DDRE |= (1<<1);
         PORTE |= (1<<1);
     }
     else
     {
-        // Output low.
         DDRE &= ~(1<<1);
         PORTE &= ~(1<<1);
     }
+// KANA 
+    if (usb_led & (1<<USB_LED_KANA))
+    {
+        DDRA |= (1<<0);
+        PORTA |= (1<<0);
+    }
+    else
+    {
+        DDRA &= ~(1<<0);
+        PORTA &= ~(1<<0);
+    }
 }
+
+// LAYER LED -------------------------------------------
+void led_layer_set(uint32_t state) {
+// GUI 
+    if ((1<<1 & state) != 0 || (1<<2 & state) != 0) {
+        DDRE |= (1<<0);
+        PORTE |= (1<<0);
+    }
+    else
+    {
+        DDRE &= ~(1<<0);
+        PORTE &= ~(1<<0);
+    }
+// FN
+    if ((1<<5 & state) != 0) {
+        DDRE |= (1<<6);
+        PORTE |= (1<<6);
+    }
+    else
+    {
+        DDRE &= ~(1<<6);
+        PORTE &= ~(1<<6);
+    }
+// MOUSE & HEX KEYPAD
+    if ((1<<4 & state) != 0 || (1<<3 & state) != 0) {
+        DDRA |= (1<<2);
+        PORTA |= (1<<2);
+        //DDRE &= ~(1<<7);
+        //PORTE &= ~(1<<7);
+    }
+    else
+    {
+        DDRA &= ~(1<<2);
+        PORTA &= ~(1<<2);
+    }
+} 
