@@ -146,7 +146,7 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       | |   |   |VLU|VLD|MUT|RWD| |PRV|PLY|STP|NXT| |FWD|   |   |SLP| |   |   |   |                   |       \
       | `---'   `---------------' `---------------' `---------------' `-----------'       o   o   o   |       \
       | ,-----------------------------------------------------------. ,-----------. ,---------------. |       \
-      | |LR0|LR1|LR2|   |   |   |   |   |   |   |   |   |   |   |   | |   |   |   | |CLC|   |   |   | |       \
+      | |LR0|LR1|LR2|   |   |   |   |   |   |   |   |   |   |   |   | |   |   |   | |CLC|   |   |MSE| |       \
       | |-----------------------------------------------------------| |-----------| |---------------| |       \
       | |     |   |   |   |   |   |   |   |   |   |   |   |   |     | |   |   |   | |   |   |   |   | |       \
       | |------------------------------------------------------     | `-----------' |------------   | |       \
@@ -154,17 +154,17 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       | |-----------------------------------------------------------|     ,---.     |---------------| |       \
       | |        |   |   |   |   |   |   |   |   |   |URL|   |      |     |   |     |   |   |   |   | |       \
       | |-----------------------------------------------------------| ,-----------. |------------   | |       \
-      | |    |   |    |    |    |    |      |    |    |MENU|FN |    | |   |   |   | | MOUSE |   |   | |       \
+      | |    |   |    |    |    |    |      |    |    |MENU|FN |    | |   |   |   | |       |   |   | |       \
       | `-----------------------------------------------------------' `-----------' `---------------' |       \
       `-----------------------------------------------------------------------------------------------'       \
 
   KEYMAP_JIS110R(
-    FN0, VOLU,VOLD,MUTE,MRWD,MPRV,MPLY,MSTP,MNXT,MFFD,FN0, FN0, SLEP,FN0, FN0, FN0, FN0, CALC,FN0, FN0, FN0,  \
+    FN0, VOLU,VOLD,MUTE,MRWD,MPRV,MPLY,MSTP,MNXT,MFFD,FN0, FN0, SLEP,FN0, FN0, FN0, FN0, CALC,FN0, FN30,FN0,  \
     FN1, FN2, FN3, FN4, FN5, FN6, FN7, FN8, FN9, FN10,FN11,FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0,  \
     FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0,  \
     FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN19,FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0,  \
     FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN20,FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0,  \
-    FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, APP, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN30,FN0, FN0 ),
+    FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, APP, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0, FN0 ),
     };
 
 
@@ -189,9 +189,9 @@ enum macro_id {
 // FN ACTIONS ------------------------------------------------------------------------------------------------
 const action_t PROGMEM fn_actions[] = {
     // MODE
-    [1] = ACTION_DEFAULT_LAYER_SET(0),         // JP  
-    [2] = ACTION_DEFAULT_LAYER_SET(1),         // Game Compatibility Mode 1
-    [3] = ACTION_DEFAULT_LAYER_SET(2),         // Game Compatibility Mode 2
+    [1] = ACTION_LAYER_SET_CLEAR(0),           // JP  
+    [2] = ACTION_LAYER_SET_CLEAR(1),           // Game Compatibility Mode 1
+    [3] = ACTION_LAYER_SET_CLEAR(2),           // Game Compatibility Mode 2
     // LAYER
     [0] = ACTION_LAYER_TAP_TOGGLE(5),          // FN0
     [30] = ACTION_LAYER_TOGGLE(4),             // Mouse Keypad
