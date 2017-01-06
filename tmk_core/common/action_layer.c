@@ -3,6 +3,7 @@
 #include "action.h"
 #include "util.h"
 #include "action_layer.h"
+#include "led.h"
 #include "hook.h"
 
 #ifdef DEBUG_ACTION
@@ -64,6 +65,7 @@ static void layer_state_set(uint32_t state)
     dprint("layer_state: ");
     layer_debug(); dprint(" to ");
     layer_state = state;
+    led_layer_set(state);
     hook_layer_change(layer_state);
     layer_debug(); dprintln();
     clear_keyboard_but_mods(); // To avoid stuck keys
