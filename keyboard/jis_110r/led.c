@@ -72,7 +72,8 @@ void led_set(uint8_t usb_led)
 
 // LAYER LED -------------------------------------------
 void led_layer_set(uint32_t state) {
-// GUI 
+// COMPATIBILITY MODE 
+    // if either compatibility mode layer is enabled turn on SUPER key LED
     if ((1<<1 & state) != 0 || (1<<2 & state) != 0) {
         DDRE |= (1<<0);
         PORTE |= (1<<0);
@@ -92,8 +93,8 @@ void led_layer_set(uint32_t state) {
         DDRE &= ~(1<<6);
         PORTE &= ~(1<<6);
     }
-// MOUSE & HEX KEYPAD
-    if ((1<<4 & state) != 0 || (1<<3 & state) != 0) {
+// MOUSE KEYPAD
+    if ((1<<4 & state) != 0) {
         DDRA |= (1<<2);
         PORTA |= (1<<2);
         //DDRE &= ~(1<<7);
@@ -103,5 +104,37 @@ void led_layer_set(uint32_t state) {
     {
         DDRA &= ~(1<<2);
         PORTA &= ~(1<<2);
+       // if (usb_led & (1<<USB_LED_NUM_LOCK))
+       // {
+       //    DDRE |= ~(1<<7);
+       //    PORTE |= ~(1<<7);
+       // }
+       // else
+       // {
+       //    DDRE &= ~(1<<7);
+       //    PORTE &= ~(1<<7);
+       // }
     }
+// HEX-SHIFT KEYPAD
+/*    if ((1<<3 & state) != 0) {
+        DDRA |= (1<<2);
+        PORTA |= (1<<2);
+        DDRE |= ~(1<<7);
+        PORTE |= ~(1<<7);
+    }
+    else
+    {
+        DDRA &= ~(1<<2);
+        PORTA &= ~(1<<2);
+        if (usb_led & (1<<USB_LED_NUM_LOCK))
+          {
+             DDRE |= ~(1<<7);
+             PORTE |= ~(1<<7);
+          }
+          else
+          {
+             DDRE &= ~(1<<7);
+             PORTE &= ~(1<<7);
+          }
+    } */
 } 
