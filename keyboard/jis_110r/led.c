@@ -35,7 +35,7 @@ void led_set(uint8_t usb_led)
     }
 
 // SCROLL LOCK
-    if (usb_led & (1<<USB_LED_SCROLL_LOCK))
+/*    if (usb_led & (1<<USB_LED_SCROLL_LOCK))
     {
         DDRA |= (1<<1);
         PORTA |= (1<<1);
@@ -44,7 +44,7 @@ void led_set(uint8_t usb_led)
     {
         DDRA &= ~(1<<1);
         PORTA &= ~(1<<1);
-    }
+    } */
 
 // CAPS LOCK
     if (usb_led & (1<<USB_LED_CAPS_LOCK))
@@ -57,7 +57,7 @@ void led_set(uint8_t usb_led)
         DDRE &= ~(1<<1);
         PORTE &= ~(1<<1);
     }
-// KANA 
+  // KANA 
     if (usb_led & (1<<USB_LED_KANA))
     {
         DDRA |= (1<<0);
@@ -67,13 +67,14 @@ void led_set(uint8_t usb_led)
     {
         DDRA &= ~(1<<0);
         PORTA &= ~(1<<0);
-    }
+    }   
 }
 
 // LAYER LED -------------------------------------------
-void led_layer_set(uint32_t state) {
+void led_layer_set(uint32_t state) 
+{
 // COMPATIBILITY MODE 
-    // if either compatibility mode layer is enabled turn on SUPER key LED
+    // if either compatibility mode layeris enabled turn on SUPER key LED
     if ((1<<1 & state) != 0 || (1<<2 & state) != 0) {
         DDRE |= (1<<0);
         PORTE |= (1<<0);
@@ -84,7 +85,7 @@ void led_layer_set(uint32_t state) {
         PORTE &= ~(1<<0);
     }
 // FN
-    if ((1<<5 & state) != 0) {
+    if ((1<<6 & state) != 0 || (1<<7 & state) != 0) {
         DDRE |= (1<<6);
         PORTE |= (1<<6);
     }
@@ -93,48 +94,25 @@ void led_layer_set(uint32_t state) {
         DDRE &= ~(1<<6);
         PORTE &= ~(1<<6);
     }
+// MODERN SCROLL LOCK [mouse wheel]
+    if ((1<<5 & state) != 0)
+    {
+        DDRA |= (1<<1);
+        PORTA |= (1<<1);
+    }
+    else
+    {
+        DDRA &= ~(1<<1);
+        PORTA &= ~(1<<1);
+    }
 // MOUSE KEYPAD
     if ((1<<4 & state) != 0) {
         DDRA |= (1<<2);
         PORTA |= (1<<2);
-        //DDRE &= ~(1<<7);
-        //PORTE &= ~(1<<7);
     }
     else
     {
         DDRA &= ~(1<<2);
         PORTA &= ~(1<<2);
-       // if (usb_led & (1<<USB_LED_NUM_LOCK))
-       // {
-       //    DDRE |= ~(1<<7);
-       //    PORTE |= ~(1<<7);
-       // }
-       // else
-       // {
-       //    DDRE &= ~(1<<7);
-       //    PORTE &= ~(1<<7);
-       // }
     }
-// HEX-SHIFT KEYPAD
-/*    if ((1<<3 & state) != 0) {
-        DDRA |= (1<<2);
-        PORTA |= (1<<2);
-        DDRE |= ~(1<<7);
-        PORTE |= ~(1<<7);
-    }
-    else
-    {
-        DDRA &= ~(1<<2);
-        PORTA &= ~(1<<2);
-        if (usb_led & (1<<USB_LED_NUM_LOCK))
-          {
-             DDRE |= ~(1<<7);
-             PORTE |= ~(1<<7);
-          }
-          else
-          {
-             DDRE &= ~(1<<7);
-             PORTE &= ~(1<<7);
-          }
-    } */
 } 
