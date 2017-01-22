@@ -28,7 +28,7 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ESC, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, JYEN,BSPC,INS ,HOME,PGUP,NO,  NO,  NO,   \
     TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,NO,  NO,  DEL, END, PGDN,P7,  P8,  P9,   \
     LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,BSLS,ENT, NO,  NO,  NO,  NO,  P4,  P5,  P6,   \
-    FN6, Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,RO,  FN7, NO,  NO,  NO,  UP,  NO,  P1,  P2,  P3,   \
+    LSFT,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,RO,  FN6, NO,  NO,  NO,  UP,  NO,  P1,  P2,  P3,   \
     CAPS,LGUI,LALT,MHEN, ENT,BSPC, SPC,HENK,KANA,RALT,FN0, RCTL,NO,  NO,  NO,  LEFT,DOWN,RGHT,P0  ,PDOT,FN30),
 
    
@@ -55,8 +55,8 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ESC, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, JYEN,BSPC,INS ,HOME,PGUP,NO,  NO,  NO,   \
     TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,NO,  NO,  DEL, END, PGDN,P7,  P8,  P9,   \
     LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,BSLS,ENT, NO,  NO,  NO,  NO,  P4,  P5,  P6,   \
-    FN6, Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,RO,  FN7, NO,  NO,  NO,  UP,  NO,  P1,  P2,  P3,   \
-    CAPS,FN4, LALT,MHEN,PMNS,PPLS,SPC, HENK,KANA,RALT,TRNS,RCTL,NO,  NO,  NO,  LEFT,DOWN,RGHT,P0  ,PDOT,FN30),
+    LSFT,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,RO,  FN6, NO,  NO,  NO,  UP,  NO,  P1,  P2,  P3,   \
+    CAPS,FN4, LALT,MHEN,PMNS,PPLS,SPC, HENK,KANA,RALT,FN7, RCTL,NO,  NO,  NO,  LEFT,DOWN,RGHT,P0  ,PDOT,FN30),
 
 
 // 2: JIS110R - Game Compatibility Mode 2 [for really bad games] ---------------------------------------------\
@@ -82,8 +82,8 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ESC, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, JYEN,BSPC,INS ,HOME,PGUP,NO,  NO,  NO,   \
     TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,NO,  NO,  DEL, END, PGDN,P7,  P8,  P9,   \
     LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,BSLS,ENT, NO,  NO,  NO,  NO,  P4,  P5,  P6,   \
-    FN6, Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,RO,  FN7, NO,  NO,  NO,  UP,  NO,  P1,  P2,  P3,   \
-    LCTL,FN3, LALT,LALT,SPC, ENT, SPC, RALT,RALT,RALT,TRNS,RCTL,NO,  NO,  NO,  LEFT,DOWN,RGHT,P0  ,PDOT,FN30),
+    LSFT,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,RO,  FN6, NO,  NO,  NO,  UP,  NO,  P1,  P2,  P3,   \
+    LCTL,FN3, LALT,LALT,SPC, ENT, SPC, RALT,RALT,RALT,FN7, RCTL,NO,  NO,  NO,  LEFT,DOWN,RGHT,P0  ,PDOT,FN30),
 
 
 // 3: JIS110R - HEX Keypad -----------------------------------------------------------------------------------\
@@ -219,6 +219,60 @@ const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1,  \
     FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN20,FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1,  \
     FN1, FN3, FN1, FN1, FN1, FN1, FN1, FN1, FN1, APP, TRNS,TRNS,FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN1, FN0 ),
+
+
+// 8: JIS110R - GM-FN ----------------------------------------------------------------------------------------\
+      ,-----------------------------------------------------------------------------------------------.       \
+      | ,---.   ,---------------. ,---------------. ,---------------. ,-----------.                   |       \
+      | |   |   |VLU|VLD|MUT|RWD| |PRV|PLY|STP|NXT| |FWD|   |   |SLP| |   |   |   |                   |       \
+      | `---'   `---------------' `---------------' `---------------' `-----------'       o   o   o   |       \
+      | ,-----------------------------------------------------------. ,-----------. ,---------------. |       \
+      | |JP |   |   |   |   |   |   |   |   |   |   |   |   |GPG|   | |   |   |   | |CLC|   |   |MKY| |       \
+      | |-----------------------------------------------------------| |-----------| |---------------| |       \
+      | |     |   |   |   |   |   |   |   |   |   |   |   |   |LOCK | |   |   |   | |   |   |   |   | |       \
+      | |------------------------------------------------------     | `-----------' |------------   | |       \
+      | |      |   |   |   |   |   |   |   |   |   |   |   |   |FN  |               |   |   |   |   | |       \
+      | |-----------------------------------------------------------|     ,---.     |---------------| |       \
+      | |        |   |   |   |   |   |   |   |   |   |URL|   |      |     |   |     |   |   |   |   | |       \
+      | |-----------------------------------------------------------| ,-----------. |------------   | |       \
+      | |    |GM |    |    |    |    |      |    |    |MENU|   |    | |   |   |   | |       |   |   | |       \
+      | `-----------------------------------------------------------' `-----------' `---------------' |       \
+      `-----------------------------------------------------------------------------------------------'       \
+
+  KEYMAP_JIS110R(
+    NO,  VOLU,VOLD,MUTE,MRWD,MPRV,MPLY,MSTP,MNXT,MFFD,NO,  NO,  SLEP,NO,  NO,  NO,  NO,  CALC,NO,  FN31,NO,   \
+    FN2, NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  FN19,NO,  NO,  NO,  NO,  NO,  NO,  NO,   \
+    NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,   \
+    NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  FN8, NO,  NO,  NO,  NO,  NO,  NO,  NO,   \
+    NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  FN20,NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,   \
+    NO,  FN2, NO,  NO,  NO,  NO,  NO,  NO,  NO,  APP, TRNS,NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  FN0 ),
+
+
+// 9: JIS110R - GM-FN LOCK -----------------------------------------------------------------------------------\
+      ,-----------------------------------------------------------------------------------------------.       \
+      | ,---.   ,---------------. ,---------------. ,---------------. ,-----------.                   |       \
+      | |   |   |VLU|VLD|MUT|RWD| |PRV|PLY|STP|NXT| |FWD|   |   |SLP| |   |   |   |                   |       \
+      | `---'   `---------------' `---------------' `---------------' `-----------'       o   o   o   |       \
+      | ,-----------------------------------------------------------. ,-----------. ,---------------. |       \
+      | |JP |   |   |   |   |   |   |   |   |   |   |   |   |GPG|   | |   |   |   | |CLC|   |   |MKY| |       \
+      | |-----------------------------------------------------------| |-----------| |---------------| |       \
+      | |     |   |   |   |   |   |   |   |   |   |   |   |   |     | |   |   |   | |   |   |   |   | |       \
+      | |------------------------------------------------------     | `-----------' |------------   | |       \
+      | |      |   |   |   |   |   |   |   |   |   |   |   |   |    |               |   |   |   |   | |       \
+      | |-----------------------------------------------------------|     ,---.     |---------------| |       \
+      | |        |   |   |   |   |   |   |   |   |   |URL|   |      |     |   |     |   |   |   |   | |       \
+      | |-----------------------------------------------------------| ,-----------. |------------   | |       \
+      | |    |GM |    |    |    |    |      |    |    |MENU|   |    | |   |   |   | |       |   |   | |       \
+      | `-----------------------------------------------------------' `-----------' `---------------' |       \
+      `-----------------------------------------------------------------------------------------------'       \
+
+  KEYMAP_JIS110R(
+    FN8, VOLU,VOLD,MUTE,MRWD,MPRV,MPLY,MSTP,MNXT,MFFD,FN8, FN8, SLEP,FN8, FN8, FN8, FN8, CALC,FN8, FN31,FN8,  \
+    FN2, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN19,FN8, FN8, FN8, FN8, FN8, FN8, FN8,  \
+    FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8,  \
+    FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8,  \
+    FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN20,FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8,  \
+    FN8, FN2, FN8, FN8, FN8, FN8, FN8, FN8, FN8, APP, TRNS,TRNS,FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN8, FN0 ),
     };
 
 
@@ -239,9 +293,9 @@ const action_t PROGMEM fn_actions[] = {
     [3] = ACTION_LAYER_SET(1, ON_RELEASE),          // Game Compatibility Mode 1
     [4] = ACTION_LAYER_SET(2, ON_RELEASE),          // Game Compatibility Mode 2
     [5] = ACTION_LAYER_TOGGLE(5),                   // Modern Scroll Lock [mouse wheel]
-    [6] = ACTION_MODS_ONESHOT(MOD_LSFT),            // Tap left shift to activate for 1 keypress
-    [7] = ACTION_MODS_ONESHOT(MOD_RSFT),            // Tap right shift to activate for 1 keypress
-//  [8] = 
+    [6] = ACTION_MODS_ONESHOT(MOD_RSFT),            // Tap right shift to activate for 1 keypress
+    [7] = ACTION_LAYER_MOMENTARY(8),                // GM-FN
+    [8] = ACTION_LAYER_ON(9, ON_BOTH),              // GM-FN LOCK
 //  [9] =
 //  [10] =
 //  [11] =
@@ -275,7 +329,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
     switch (id) {
         case GPG_KEY:      // unix-[wget & install shion-os public GPG key]
             return (record->event.pressed ?
-                    MACRO( I(5), T(C), T(D), T(SPC), T(SLSH), T(T), T(M), T(P), T(SPC), D(LSHIFT), D(6),      \
+                    MACRO( I(10), T(C), T(D), T(SPC), T(SLSH), T(T), T(M), T(P), T(SPC), D(LSHIFT), D(6),      \
                     U(LSHIFT), U(6), D(LSHIFT), D(6), U(LSHIFT), U(6), T(SPC), T(W), T(G), T(E), T(T),        \
                     T(SPC), T(H), T(T), T(T), T(P), T(QUOT), T(SLSH), T(SLSH), T(S), T(H), T(I), T(O), T(N),  \
                     T(O), T(S), T(DOT), T(S), T(3), T(DOT), T(A), T(M), T(A), T(Z), T(O), T(N), T(A), T(W),   \
@@ -291,7 +345,7 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
                     MACRO_NONE );
         case URL:          // url-[null-bin.blogspot.com]
             return (record->event.pressed ?
-                    MACRO( I(5), T(N), T(U), T(L), T(L), T(MINS), T(B), T(I), T(N), T(DOT), T(B), T(L), T(O), \
+                    MACRO( I(10), T(N), T(U), T(L), T(L), T(MINS), T(B), T(I), T(N), T(DOT), T(B), T(L), T(O), \
                     T(G), T(S), T(P), T(O), T(T), T(DOT), T(C), T(O), T(M), END ) :
                     MACRO_NONE );
     }

@@ -85,7 +85,7 @@ void led_layer_set(uint32_t state)
         PORTE &= ~(1<<0);
     }
 // FN
-    if ((1<<6 & state) != 0 || (1<<7 & state) != 0) {
+    if ((1<<6 & state) != 0 || (1<<7 & state) != 0 || (1<<8 & state) != 0 || (1<<9 & state) != 0) {
         DDRE |= (1<<6);
         PORTE |= (1<<6);
     }
