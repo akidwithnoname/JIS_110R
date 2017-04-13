@@ -53,8 +53,6 @@ void default_layer_xor(uint32_t state)
 }
 #endif
 
-
-#ifndef NO_ACTION_LAYER
 /* 
  * Keymap Layer State
  */
@@ -70,6 +68,8 @@ static void layer_state_set(uint32_t state)
     layer_debug(); dprintln();
     clear_keyboard_but_mods(); // To avoid stuck keys
 }
+
+#ifndef NO_ACTION_LAYER
 
 void layer_clear(void)
 {
