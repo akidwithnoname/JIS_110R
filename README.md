@@ -1,78 +1,10 @@
-TMK Keyboard Firmware Collection
+JIS_110R Keyboard Firmware
 ================================
-This repository includes keyboard and converter firmware projects built with [`tmk_core`][tmk_core] keyboard library.
+JIS_110R is a custom 110-key JIS Filco Majestouch keyboard using AT90USB1286 microcontroller.
+
+This repository includes JIS_110R keyboard firmwares built with [`tmk_core`][tmk_core] keyboard library.
 
 The latest source code is available here: <http://github.com/tmk/tmk_keyboard>
-
-
-Updates
--------
-#### 2016/06/26
-Keymap framework was updated. `fn_actions[]` should be defined as `action_t` instead of `uint16_t`. And default code for keymap handling is now included in core you just need define `uint8_t keymaps[][MATRIX_ROWS][MATRIX_COLS]` and `action_t fn_actions[]`.
-
-
-#### 2016/06/22
-Some projects were moved from `converter` and `keyboard` to `orphan` directory. Those might be removed in some future but you will be able to access them with `orphans` tag. See <https://github.com/tmk/tmk_keyboard/issues/173>
-
-#### 2016/02/10
-core: flabbergast's Chibios protocol was merged from <https://github.com/flabbergast/tmk_keyboard/tree/chibios> (@72b1668). See [tmk_core/protocol/chibios/README.md](tmk_core/protocol/chibios/README.md). Chibios protocol supports Cortex-M such as STM32 and Kinetis.
-
-#### 2015/04/22
-Core library was separated to other branch `core`. <https://github.com/tmk/tmk_keyboard/tree/core>
-
-In `Makefile` you need to set `TMK_DIR` to indicate core library location now.
-
-    TMK_DIR = ../../tmk_core
-
-
-
-Projects
---------
-You can find some keyboard specific projects under `converter` and `keyboard` directory.
-
-### converter
-* [ps2_usb](converter/ps2_usb/)             - [PS/2 keyboard to USB][GH_ps2]
-* [adb_usb](converter/adb_usb/)             - [ADB keyboard to USB][GH_adb]
-* [m0110_usb](converter/m0110_usb)          - [Macintosh 128K/512K/Plus keyboard to USB][GH_m0110]
-* [terminal_usb](converter/terminal_usb/)   - [IBM Model M terminal keyboard(PS/2 scancode set3) to USB][GH_terminal]
-* [news_usb](converter/news_usb/)           - [Sony NEWS keyboard to USB][GH_news]
-* [x68k_usb](converter/x68k_usb/)           - [Sharp X68000 keyboard to USB][GH_x68k]
-* [sun_usb](converter/sun_usb/)             - [Sun] to USB(type4, 5 and 3?)
-* [pc98_usb](converter/pc98_usb/)           - [PC98] to USB
-* [usb_usb](converter/usb_usb/)             - [USB to USB][GH_usb]
-* [ibm4704_usb](converter/ibm4704_usb)      - [IBM 4704 keyboard to USB][GH_ibm4704]
-* [next_usb](converter/next_usb)            - NeXT(Non-ADB) to USB, contributed by [BCG](https://github.com/bgould) and based on [Adafruit's work](https://learn.adafruit.com/usb-next-keyboard-with-arduino-micro/overview)
-
-### keyboard
-* [hhkb](keyboard/hhkb/)                    - [Happy Hacking Keyboard pro][GH_hhkb] **my main board**
-* [alps64](keyboard/alps64/)                - [Alps64 PCB](https://geekhack.org/index.php?topic=69740.0)
-* [hbkb](keyboard/hbkb/)                    - [Happy Buckling spring keyboard][GH_hbkb](IBM Model M 60% mod)
-* [Infinity](keyboard/infinity/)            - Massdrop [Infinity keyboard][Infinity]
-* [gh60](keyboard/gh60/)                    - [GH60] DIY 60% keyboard [prototype][GH60_proto] **my second board**
-* [onekey](keyboard/onekey/)                - Simple one key keyboard example
-
-
-### Projects based tmk_keyboard or tmk_core
-https://github.com/tmk/tmk_keyboard/wiki/TMK-Based-Projects
-
-
-[GH_hhkb]:      http://geekhack.org/showwiki.php?title=Island:12047
-[GH_ps2]:       http://geekhack.org/showwiki.php?title=Island:14618
-[GH_adb]:       http://geekhack.org/showwiki.php?title=Island:14290
-[GH_hhkb_bt]:   http://geekhack.org/showwiki.php?title=Island:20851
-[GH_m0110]:     http://geekhack.org/showwiki.php?title=Island:24965
-[GH_news]:      http://geekhack.org/showwiki.php?title=Island:25759
-[GH_terminal]:  http://geekhack.org/showwiki.php?title=Island:27272
-[GH_x68k]:      http://geekhack.org/showwiki.php?title=Island:29060
-[GH_hbkb]:      http://geekhack.org/showwiki.php?title=Island:29483
-[GH_ibm4704]:   http://geekhack.org/index.php?topic=54706.0
-[GH60]:         http://geekhack.org/index.php?topic=34959
-[GH60_proto]:   http://geekhack.org/index.php?topic=37570.0
-[PC98]:         http://en.wikipedia.org/wiki/NEC_PC-9801
-[Sun]:          http://en.wikipedia.org/wiki/Sun-3
-[Infinity]:     https://www.massdrop.com/buy/infinity-keyboard-kit
-[tmk_core]:     https://github.com/tmk/tmk_core
-
 
 
 License
@@ -204,7 +136,6 @@ Files and Directories
 -------------------
 ### Top
 * keyboard/     - keyboard projects
-* converter/    - protocol converter projects
 * tmk_core/     - core library
 * tmk_core/doc/ - documents
 
