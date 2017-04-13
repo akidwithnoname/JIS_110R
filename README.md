@@ -7,8 +7,7 @@ The latest source code is available here: <http://github.com/tmk/tmk_keyboard>
 
 Firmwares
 -------------------
-### Top
-* keyboard/jis_110r     - a custom 110-key JIS Filco Majestouch keyboard using AT90USB1286 microcontroller.
+* [jis_110r](keyboard/jis_110r)     - a custom 110-key JIS Filco Majestouch keyboard using AT90USB1286 microcontroller.
 
 
 
