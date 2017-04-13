@@ -1,10 +1,15 @@
-JIS_110R Keyboard Firmware
+[null] Keyboard Firmwares
 ================================
-JIS_110R is a custom 110-key JIS Filco Majestouch keyboard using AT90USB1286 microcontroller.
-
-This repository includes JIS_110R keyboard firmwares built with [`tmk_core`][tmk_core] keyboard library.
+This repository includes keyboard firmwares built with my modified version of [`tmk_core`][tmk_core] keyboard library.
 
 The latest source code is available here: <http://github.com/tmk/tmk_keyboard>
+
+
+Firmwares
+-------------------
+### Top
+* keyboard/jis_110r     - a custom 110-key JIS Filco Majestouch keyboard using AT90USB1286 microcontroller.
+
 
 
 License
