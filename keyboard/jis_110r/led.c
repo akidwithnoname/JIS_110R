@@ -1,5 +1,5 @@
 /*
-Copyright 2012 Jun Wako <wakojun@gmail.com>
+Copyright 2017 Yuki Sakatoi A.K.A. [null] <null.bin.pc@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,101 +18,105 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <avr/io.h>
 #include "stdint.h"
 #include "led.h"
+#include "wait.h"
+#include "led_def.h"
 
-// STANDARD HID LED -------------------------------------------
+
+
+// STANDBY LED/s ----------------------------------------------------------------------------------------------------
+
+void sleep_led_on(void)
+{
+    jis_110r_led_on_kana();
+}
+
+
+
+// STANDARD HID LEDs ------------------------------------------------------------------------------------------------
 void led_set(uint8_t usb_led)
 {
-// NUM LOCK
+
+    // NUM LOCK
     if (usb_led & (1<<USB_LED_NUM_LOCK))
     {
-        DDRE |= (1<<7);
-        PORTE |= (1<<7);
+        jis_110r_led_on_num_lock();
     }
     else
     {
-        DDRE &= ~(1<<7);
-        PORTE &= ~(1<<7);
+        jis_110r_led_off_num_lock();
     }
 
-// SCROLL LOCK
-/*    if (usb_led & (1<<USB_LED_SCROLL_LOCK))
+    // SCROLL LOCK
+    if (usb_led & (1<<USB_LED_SCROLL_LOCK))
     {
-        DDRA |= (1<<1);
-        PORTA |= (1<<1);
+        jis_110r_led_on_scroll_lock();
     }
     else
     {
-        DDRA &= ~(1<<1);
-        PORTA &= ~(1<<1);
-    } */
+        jis_110r_led_off_scroll_lock();
+    } 
 
-// CAPS LOCK
+    // CAPS LOCK
     if (usb_led & (1<<USB_LED_CAPS_LOCK))
     {
-        DDRE |= (1<<1);
-        PORTE |= (1<<1);
+        jis_110r_led_on_caps_lock();
     }
     else
     {
-        DDRE &= ~(1<<1);
-        PORTE &= ~(1<<1);
+        jis_110r_led_off_caps_lock();
     }
-  // KANA 
+
+    // KANA 
     if (usb_led & (1<<USB_LED_KANA))
     {
-        DDRA |= (1<<0);
-        PORTA |= (1<<0);
+        jis_110r_led_on_kana();
     }
     else
     {
-        DDRA &= ~(1<<0);
-        PORTA &= ~(1<<0);
+        jis_110r_led_off_kana();
     }   
 }
 
-// LAYER LED -------------------------------------------
+
+
+// LAYER LEDs -------------------------------------------------------------------------------------------------------
 void led_layer_set(uint32_t state) 
 {
-// COMPATIBILITY MODE 
+    // COMPATIBILITY MODE 
     // if either compatibility mode layeris enabled turn on SUPER key LED
     if ((1<<1 & state) != 0 || (1<<2 & state) != 0) {
-        DDRE |= (1<<0);
-        PORTE |= (1<<0);
+        jis_110r_led_on_meta();
     }
     else
     {
-        DDRE &= ~(1<<0);
-        PORTE &= ~(1<<0);
+        jis_110r_led_off_meta();
     }
-// FN
+
+    // FN
     if ((1<<6 & state) != 0 || (1<<7 & state) != 0 || (1<<8 & state) != 0 || (1<<9 & state) != 0) {
-        DDRE |= (1<<6);
-        PORTE |= (1<<6);
+        jis_110r_led_on_fn();
     }
     else
     {
-        DDRE &= ~(1<<6);
-        PORTE &= ~(1<<6);
+        jis_110r_led_off_fn();
     }
-// MODERN SCROLL LOCK [mouse wheel]
+
+    // MODERN SCROLL LOCK [mouse wheel]
     if ((1<<5 & state) != 0)
     {
-        DDRA |= (1<<1);
-        PORTA |= (1<<1);
+        jis_110r_led_on_scroll_lock();
     }
     else
     {
-        DDRA &= ~(1<<1);
-        PORTA &= ~(1<<1);
+        jis_110r_led_off_scroll_lock();
     }
-// MOUSE KEYPAD
+
+    // MOUSE KEYPAD
     if ((1<<4 & state) != 0) {
-        DDRA |= (1<<2);
-        PORTA |= (1<<2);
+        jis_110r_led_on_keypad();
     }
     else
     {
-        DDRA &= ~(1<<2);
-        PORTA &= ~(1<<2);
+        jis_110r_led_off_keypad();
     }
-} 
+}

@@ -1,5 +1,5 @@
 /*
-Copyright 2012 Jun Wako <wakojun@gmail.com>
+Copyright 2017 Yuki Sakatoi A.K.A. [null] <null.bin.pc@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -15,60 +15,63 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
 #ifndef CONFIG_H
 #define CONFIG_H
 
 
-/* USB Device descriptor parameter */
-#define VENDOR_ID       0xFEED
-#define PRODUCT_ID      0x6060
+// USB Device descriptor parameter
+#define VENDOR_ID       0x04d9
+#define PRODUCT_ID      0x2011
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    [null]
-#define PRODUCT         [null] 110R ES
-#define DESCRIPTION     [null] 110R ES
+#define PRODUCT         Filco Majestouch JIS 110R
+#define DESCRIPTION     Filco Majestouch JIS 110R
 
-/* key matrix size */
+// matrix size 
 #define MATRIX_ROWS 6
 #define MATRIX_COLS 21
 
-/* define if matrix has ghost */
+// define if matrix has ghost
 //#define MATRIX_HAS_GHOST
 
-/* Set tap speed in ms */
+// Set tap speed in ms 
 #define TAPPING_TERM 100
 
-/* Set number of taps required to toggle a key, 1=2 */
+// Set number of taps required to toggle a key, 1=2 
 #define TAPPING_TOGGLE 1
 
-/* Set 0 if debouncing isn't needed */
+// Set 0 if debouncing isn't needed 
 #define DEBOUNCE    5
 
-/* Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap */
-//#define LOCKING_SUPPORT_ENABLE
-/* Locking resynchronize hack */
-//#define LOCKING_RESYNC_ENABLE
+// Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap 
+#define LOCKING_SUPPORT_ENABLE
 
-/* key combination for command */
+// Locking resynchronize hack
+#define LOCKING_RESYNC_ENABLE
+
+// key combination for command
 #define IS_COMMAND() ( \
     keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)) \
 )
 
-/*
- * Feature disable options
- *  These options are also useful to firmware size reduction.
- */
 
-/* disable debug print */
-//#define NO_DEBUG
 
-/* disable print */
-//#define NO_PRINT
 
-/* disable action features */
-//#define NO_ACTION_LAYER
-//#define NO_ACTION_TAPPING
-//#define NO_ACTION_ONESHOT
-//#define NO_ACTION_MACRO
-//#define NO_ACTION_FUNCTION
+// Feature disable options ------------------------------------------------------------------------------------------
+
+
+// disable debug print
+    //#define NO_DEBUG
+
+// disable print
+    //#define NO_PRINT
+
+// disable action features 
+    //#define NO_ACTION_LAYER
+    //#define NO_ACTION_TAPPING
+    //#define NO_ACTION_ONESHOT
+    //#define NO_ACTION_MACRO
+    //#define NO_ACTION_FUNCTION
 
 #endif
