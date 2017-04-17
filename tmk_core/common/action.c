@@ -84,7 +84,7 @@ void action_exec(keyevent_t event)
     process_action(&record);
     if (!IS_NOEVENT(record.event)) {
         dprint("processed: "); debug_record(record); dprintln();
-    }s
+    }
 #endif
 }
 
