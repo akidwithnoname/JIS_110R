@@ -1,39 +1,26 @@
 /*
-Copyright 2011 Jun Wako <wakojun@gmail.com>
+Copyright 2017 Tobi Sakatoi <tobizehpanda@gmail.com>
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
 (at your option) any later version.
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
+
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef LED_H
-#define LED_H
-#include "stdint.h"
+// SET PIN
+char pin[] = ""; // USB HID hex values in decimal [ "899195" = "Keypad 137" ] 
 
+// SET PIN CHARECTER COUNT 
+char pin_char_current[0]; // "pin_char_current" and "str_action" Must be egual to number of digits in "pin"
+char str_action[0];
 
-/* keyboard LEDs */
-#define USB_LED_NUM_LOCK                0
-#define USB_LED_CAPS_LOCK               1
-#define USB_LED_SCROLL_LOCK             2
-#define USB_LED_COMPOSE                 3
-#define USB_LED_KANA                    4
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void led_set(uint8_t usb_led);
-void led_layer_set(uint32_t state);
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif
+// PIN ACTION [ runs once every time correct pin is input ]
+static void pin_action(void) { }

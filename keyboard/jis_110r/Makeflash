@@ -3,8 +3,12 @@
 make -f Makefile
 if [ $? -eq 0 ]
 then
+	echo ""
 	echo "compile successfull, flashing firmware JIS_110R.hex to microcontroller"
-	echo "please enter root password THEN set the microcontroller into DFU mode to re-flash firmware"
+	echo ""
+	echo "  1: Please type password for 'su' (root) then press 'ENTER'"
+	echo "  2: Switch the keyboard's microcontroller into DFU mode to begin flashing firmware"
+	echo ""
 	su -c "../../teensy_loader_cli/teensy_loader_cli --mcu=at90usb1286 -w ./JIS_110R.hex"
 	if [ $? -eq 0 ]
 	then

@@ -15,19 +15,22 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+
 #include <avr/io.h>
 #include "stdint.h"
 #include "led.h"
 #include "wait.h"
-#include "led_def.h"
+#include "led_animations.h"
+#include <avr/interrupt.h>
 
 
 
 // STANDBY LED/s ----------------------------------------------------------------------------------------------------
-
 void sleep_led_on(void)
 {
-    jis_110r_led_on_kana();
+    jis_110r_led_animation_sleep();
+    wait_ms(300);
 }
 
 
@@ -35,7 +38,6 @@ void sleep_led_on(void)
 // STANDARD HID LEDs ------------------------------------------------------------------------------------------------
 void led_set(uint8_t usb_led)
 {
-
     // NUM LOCK
     if (usb_led & (1<<USB_LED_NUM_LOCK))
     {
@@ -93,7 +95,7 @@ void led_layer_set(uint32_t state)
     }
 
     // FN
-    if ((1<<6 & state) != 0 || (1<<7 & state) != 0 || (1<<8 & state) != 0 || (1<<9 & state) != 0) {
+    if ((1<<6 & state) != 0 || (1<<7 & state) != 0 || (1<<8 & state) != 0 || (1<<15 & state) != 0 || (1<<9 & state) != 0) {
         jis_110r_led_on_fn();
     }
     else
@@ -118,5 +120,5 @@ void led_layer_set(uint32_t state)
     else
     {
         jis_110r_led_off_keypad();
-    }
+    }   
 }

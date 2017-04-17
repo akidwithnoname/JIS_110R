@@ -14,6 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 #include "host.h"
 #include "keycode.h"
 #include "keyboard.h"
@@ -29,12 +30,43 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "hook.h"
 #include "wait.h"
 
+#ifdef LOCK_PIN
+#include "pin.h"
+#else
+#include "nopin.h"
+#endif
+
 #ifdef DEBUG_ACTION
 #include "debug.h"
 #else
 #include "nodebug.h"
 #endif
 
+void checkpin(char * check, char * current, char * pin){
+        strcat(current, check);
+        char pin_char_appended[strlen(pin)+1];
+        if (strlen(current) <= strlen(pin)){
+                strncpy(pin_char_appended, pin, strlen(current));
+        }
+        else {
+                dprintf("\n\nEVENT PIN: ERRORS HAVE HAPPENED!!\n%d   %d\n\n", strlen(current), strlen(pin));
+                strcpy(pin_char_current, "");
+                return;
+        }
+        pin_char_appended[strlen(current)] = '\0';
+        dprintf("current- %s\n pin- %s\n pin_char_appended- %s\n", current, pin, pin_char_appended);
+        dprintf("pin_length- %d\n pin_char_current- %s\n", strlen(pin_char_appended), pin_char_current);
+        if ( strlen(current) == strlen(pin) && ( strcmp(current, pin) == 0 ) ){
+		pin_action();	
+                strcpy(pin_char_current, "");
+        }
+        else if ( strcmp(current, pin_char_appended) == 0){
+                strcpy(pin_char_current, current);
+        }
+        else {
+                strcpy(pin_char_current, "");
+        }
+}
 
 void action_exec(keyevent_t event)
 {
@@ -52,7 +84,7 @@ void action_exec(keyevent_t event)
     process_action(&record);
     if (!IS_NOEVENT(record.event)) {
         dprint("processed: "); debug_record(record); dprintln();
-    }
+    }s
 #endif
 }
 
@@ -86,6 +118,9 @@ void process_action(keyrecord_t *record)
                         send_keyboard_report();
                     }
                     register_code(action.key.code);
+                    dprintf("EVENT PIN: - %d - %u - %x \n", action, action, action);
+                  	sprintf(str_action, "%d", action);
+                  	checkpin(str_action, pin_char_current, pin); 
                 } else {
                     unregister_code(action.key.code);
                     if (mods) {
@@ -584,3 +619,7 @@ void debug_action(action_t action)
     }
     dprintf("[%X:%02X]", action.kind.param>>8, action.kind.param&0xff);
 }
+
+
+
+

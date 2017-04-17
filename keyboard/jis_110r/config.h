@@ -50,13 +50,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Locking resynchronize hack
 #define LOCKING_RESYNC_ENABLE
 
+// Enable PIN number lock for entering layer 15
+#define LOCK_PIN
+
 // key combination for command
 #define IS_COMMAND() ( \
-    keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)) \
+keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)) \
 )
 
-
-
+// Enable action debug
+#define DEBUG_ACTION
 
 // Feature disable options ------------------------------------------------------------------------------------------
 
