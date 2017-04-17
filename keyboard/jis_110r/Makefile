@@ -76,7 +76,6 @@ SLEEP_LED_ENABLE ?= yes     # Breathing sleep LED during USB suspend
 NKRO_ENABLE ?= yes	    # USB Nkey Rollover
 ACTIONMAP_ENABLE ?= yes	    # Use 16bit action codes in keymap instead of 8bit keycodes
 
-
 #
 # Keymap file
 #

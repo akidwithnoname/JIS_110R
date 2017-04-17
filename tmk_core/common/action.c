@@ -30,17 +30,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "hook.h"
 #include "wait.h"
 
-#ifdef LOCK_PIN
-#include "pin.h"
-#else
-#include "nopin.h"
-#endif
-
 #ifdef DEBUG_ACTION
 #include "debug.h"
 #else
 #include "nodebug.h"
 #endif
+
+// CHECK INPUT AGAINST PIN
+#ifdef PIN_LOCK_ENABLE
+#include "pin.h"
 
 void checkpin(char * check, char * current, char * pin){
         strcat(current, check);
@@ -57,7 +55,7 @@ void checkpin(char * check, char * current, char * pin){
         dprintf("current- %s\n pin- %s\n pin_char_appended- %s\n", current, pin, pin_char_appended);
         dprintf("pin_length- %d\n pin_char_current- %s\n", strlen(pin_char_appended), pin_char_current);
         if ( strlen(current) == strlen(pin) && ( strcmp(current, pin) == 0 ) ){
-		pin_action();	
+                pin_action();
                 strcpy(pin_char_current, "");
         }
         else if ( strcmp(current, pin_char_appended) == 0){
@@ -67,6 +65,7 @@ void checkpin(char * check, char * current, char * pin){
                 strcpy(pin_char_current, "");
         }
 }
+#endif
 
 void action_exec(keyevent_t event)
 {
@@ -118,9 +117,12 @@ void process_action(keyrecord_t *record)
                         send_keyboard_report();
                     }
                     register_code(action.key.code);
-                    dprintf("EVENT PIN: - %d - %u - %x \n", action, action, action);
+		    // PIN LOCK
+                    #ifdef PIN_LOCK_ENABLE
+                  	dprintf("EVENT PIN: - %d - %u - %x \n", action, action, action);
                   	sprintf(str_action, "%d", action);
-                  	checkpin(str_action, pin_char_current, pin); 
+                  	checkpin(str_action, pin_char_current, pin);
+		    #endif 
                 } else {
                     unregister_code(action.key.code);
                     if (mods) {

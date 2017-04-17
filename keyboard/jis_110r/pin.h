@@ -15,12 +15,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "action_layer.h"
+
 // SET PIN
-char pin[] = "899195"; // USB HID hex values in decimal [ "899195" = "Keypad 137" ] 
+char pin[] = "828281818079807954"; // USB HID hex values in decimal [ "828281818079807954" = "52 52 51 51 50 4F 50 4F 05 04" = "KONAMI code" ] 
 
 // SET PIN CHARECTER COUNT 
-char pin_char_current[6]; // "pin_char_current" and "str_action" Must be egual to number of digits in "pin"
-char str_action[6];
+char pin_char_current[18]; // "pin_char_current" and "str_action" Must be egual to number of digits in "pin"
+char str_action[18];
 
 // PIN ACTION [ runs once every time correct pin is input ]
 static void pin_action(void)

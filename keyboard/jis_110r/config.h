@@ -44,14 +44,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // Set 0 if debouncing isn't needed 
 #define DEBOUNCE    5
 
+// Lock layers, actions, macros, or custom functions behind global PIN/passcode. Configure in "pin.h"
+#define PIN_LOCK_ENABLE
+
 // Mechanical locking support. Use KC_LCAP, KC_LNUM or KC_LSCR instead in keymap 
-#define LOCKING_SUPPORT_ENABLE
+//#define LOCKING_SUPPORT_ENABLE
 
 // Locking resynchronize hack
-#define LOCKING_RESYNC_ENABLE
-
-// Enable PIN number lock for entering layer 15
-#define LOCK_PIN
+//#define LOCKING_RESYNC_ENABLE
 
 // key combination for command
 #define IS_COMMAND() ( \
@@ -61,8 +61,9 @@ keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)) \
 // Enable action debug
 #define DEBUG_ACTION
 
-// Feature disable options ------------------------------------------------------------------------------------------
 
+
+// Feature disable options ------------------------------------------------------------------------------------------
 
 // disable debug print
     //#define NO_DEBUG
