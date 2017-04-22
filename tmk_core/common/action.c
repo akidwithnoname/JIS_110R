@@ -29,6 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "action.h"
 #include "hook.h"
 #include "wait.h"
+#include "led_pwm.h"
 
 #ifdef DEBUG_ACTION
 #include "debug.h"
@@ -117,12 +118,12 @@ void process_action(keyrecord_t *record)
                         send_keyboard_report();
                     }
                     register_code(action.key.code);
-		    // PIN LOCK
+                    // PIN LOCK
                     #ifdef PIN_LOCK_ENABLE
-                  	dprintf("EVENT PIN: - %d - %u - %x \n", action, action, action);
-                  	sprintf(str_action, "%d", action);
-                  	checkpin(str_action, pin_char_current, pin);
-		    #endif 
+                  	    dprintf("EVENT PIN: - %d - %u - %x \n", action, action, action);
+                  	    sprintf(str_action, "%d", action);
+                  	    checkpin(str_action, pin_char_current, pin);
+                    #endif 
                 } else {
                     unregister_code(action.key.code);
                     if (mods) {
@@ -346,6 +347,9 @@ void process_action(keyrecord_t *record)
 #ifndef NO_ACTION_MACRO
         case ACT_MACRO:
             action_macro_play(action_get_macro(record, action.func.id, action.func.opt));
+            #ifdef LED_PWM_ENABLE
+                typing_led_animation_off();
+            #endif
             break;
 #endif
 #ifdef BACKLIGHT_ENABLE

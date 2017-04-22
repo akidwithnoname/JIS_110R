@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "action_layer.h"
 #include "action_util.h"
 #include "eeconfig.h"
-#include "sleep_led.h"
+#include "led_pwm.h"
 #include "led.h"
 #include "command.h"
 #include "backlight.h"
@@ -192,10 +192,11 @@ static bool command_common(uint8_t code)
             // test breathing sleep LED
             print("Sleep LED test\n");
             if (sleep_led_test) {
-                sleep_led_disable();
+                sleep_led_animation_off();
                 led_set(host_keyboard_leds());
             } else {
-                sleep_led_enable();
+                sleep_led_animation_on();
+                pwm_timer_enable();
             }
             sleep_led_test = !sleep_led_test;
             break;

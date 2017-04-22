@@ -44,8 +44,8 @@
 #include "led.h"
 #include "sendchar.h"
 #include "debug.h"
-#ifdef SLEEP_LED_ENABLE
-#include "sleep_led.h"
+#ifdef LED_PWM_ENABLE
+#include "led_pwm.h"
 #endif
 #include "suspend.h"
 #include "hook.h"
@@ -57,10 +57,9 @@
 #include "matrix.h"
 #include "descriptor.h"
 #include "lufa.h"
-
+#include "wait.h"
 
 //#define LUFA_DEBUG
-
 
 uint8_t keyboard_idle = 0;
 /* 0: Boot Protocol, 1: Report Protocol(default) */
@@ -652,10 +651,15 @@ int main(void)
     /* init modules */
     keyboard_init();
     host_set_driver(&lufa_driver);
-#ifdef SLEEP_LED_ENABLE
-    sleep_led_init();
-#endif
-
+    #ifdef LED_PWM_ENABLE    
+        pwm_timer_init();
+        pwm_timer_enable();
+        #ifdef LED_BOOT_ANIMATION
+            loading_led_animation_on();
+            wait_ms(1400);
+            loading_led_animation_off();
+        #endif
+    #endif
     print("Keyboard start.\n");
     hook_late_init();
     while (1) {
@@ -692,12 +696,18 @@ void hook_usb_suspend_entry(void)
     _led_stats = keyboard_led_stats;
     keyboard_led_stats = 0;
     led_set(keyboard_led_stats);
-
+    //_led_layer_stats = keyboard_led_layer_stats;
+    //keyboard_led_layer_stats =0;
+    //led_layer_set(keyboard_led_layer_stats);
     matrix_clear();
     clear_keyboard();
-#ifdef SLEEP_LED_ENABLE
-    sleep_led_enable();
-#endif
+    #ifdef LED_PWM_ENABLE
+        led_animation_off();
+            #ifdef SLEEP_LED_ENABLE
+                sleep_led_animation_on();
+                pwm_timer_enable();
+            #endif
+    #endif
 }
 
 __attribute__((weak))
@@ -713,10 +723,12 @@ __attribute__((weak))
 void hook_usb_wakeup(void)
 {
     suspend_wakeup_init();
-#ifdef SLEEP_LED_ENABLE
-    sleep_led_disable();
-#endif
-
+    #ifdef LED_PWM_ENABLE
+        #ifdef SLEEP_LED_ENABLE
+            sleep_led_animation_off();
+        #endif
+        led_animation_on();
+    #endif
     // Restore LED status
     // BIOS/grub won't recognize/enumerate if led_set() takes long(around 40ms?)
     // Converters fall into the case and miss wakeup event(timeout to reply?) in the end.

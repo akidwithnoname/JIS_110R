@@ -61,7 +61,8 @@ keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)) \
 // Enable action debug
 #define DEBUG_ACTION
 
-
+// Boot animation enable
+#define LED_BOOT_ANIMATION
 
 // Feature disable options ------------------------------------------------------------------------------------------
 

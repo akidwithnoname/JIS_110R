@@ -21,19 +21,51 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "stdint.h"
 #include "led.h"
 #include "wait.h"
-#include "led_animations.h"
+#include "led_pwm.h"
 #include <avr/interrupt.h>
 
 
 
-// STANDBY LED/s ----------------------------------------------------------------------------------------------------
-void sleep_led_on(void)
-{
-    jis_110r_led_animation_sleep();
-    wait_ms(300);
-}
+// LED DEFINITION ---------------------------------------------------------------------------------------------------
+void fn_led_on(void)             { DDRE |=  (1<<6); PORTE |=  (1<<6); }
+void fn_led_off(void)            { DDRE &= ~(1<<6); PORTE &= ~(1<<6); }
+
+void keypad_led_on(void)         { DDRA |=  (1<<2); PORTA |=  (1<<2); }
+void keypad_led_off(void)        { DDRA &= ~(1<<2); PORTA &= ~(1<<2); }
+
+void scroll_lock_led_on(void)    { DDRA |=  (1<<1); PORTA |=  (1<<1); }
+void scroll_lock_led_off(void)   { DDRA &= ~(1<<1); PORTA &= ~(1<<1); }
+
+void num_lock_led_on(void)       { DDRE |=  (1<<7); PORTE |=  (1<<7); }
+void num_lock_led_off(void)      { DDRE &= ~(1<<7); PORTE &= ~(1<<7); }
+
+void caps_lock_led_on(void)      { DDRE |=  (1<<1); PORTE |=  (1<<1); }
+void caps_lock_led_off(void)     { DDRE &= ~(1<<1); PORTE &= ~(1<<1); }
+
+void kana_led_on(void)           { DDRA |=  (1<<0); PORTA |=  (1<<0); }
+void kana_led_off(void)          { DDRA &= ~(1<<0); PORTA &= ~(1<<0); }
+
+void meta_led_on(void)           { DDRE |=  (1<<0); PORTE |=  (1<<0); }
+void meta_led_off(void)          { DDRE &= ~(1<<0); PORTE &= ~(1<<0); }
+
+void left_led_on(void)           { DDRA |=  (1<<5); PORTA |=  (1<<5); }
+void left_led_off(void)          { DDRA &= ~(1<<5); PORTA &= ~(1<<5); }
+
+void center_led_on(void)         { DDRA |=  (1<<3); PORTA |=  (1<<3); }
+void center_led_off(void)        { DDRA &= ~(1<<3); PORTA &= ~(1<<3); }
+
+void right_led_on(void)          { DDRA |=  (1<<6); PORTA |=  (1<<6); }
+void right_led_off(void)         { DDRA &= ~(1<<6); PORTA &= ~(1<<6); }
+
+void sleep_led_on(void)          { right_led_on(); }
+void sleep_led_off(void)         { right_led_off(); }
 
 
+
+// LED BRIGHTNESS [ 0 - 255 ] ---------------------------------------------------------------------------------------
+uint8_t led_brightness_level = 75;
+
+ 
 
 // STANDARD HID LEDs ------------------------------------------------------------------------------------------------
 void led_set(uint8_t usb_led)
@@ -41,41 +73,45 @@ void led_set(uint8_t usb_led)
     // NUM LOCK
     if (usb_led & (1<<USB_LED_NUM_LOCK))
     {
-        jis_110r_led_on_num_lock();
+        num_lock_led_solid_on();
     }
     else
     {
-        jis_110r_led_off_num_lock();
+        num_lock_led_solid_off();
+        num_lock_led_off();
     }
 
     // SCROLL LOCK
     if (usb_led & (1<<USB_LED_SCROLL_LOCK))
     {
-        jis_110r_led_on_scroll_lock();
+        scroll_lock_led_solid_on();
     }
     else
     {
-        jis_110r_led_off_scroll_lock();
+        scroll_lock_led_solid_off();
+        scroll_lock_led_off(); 
     } 
 
     // CAPS LOCK
     if (usb_led & (1<<USB_LED_CAPS_LOCK))
     {
-        jis_110r_led_on_caps_lock();
+        caps_lock_led_solid_on();
     }
     else
     {
-        jis_110r_led_off_caps_lock();
+        caps_lock_led_solid_off();
+        caps_lock_led_off();
     }
 
     // KANA 
     if (usb_led & (1<<USB_LED_KANA))
     {
-        jis_110r_led_on_kana();
+        kana_led_solid_on();
     }
     else
     {
-        jis_110r_led_off_kana();
+        kana_led_solid_off();
+        kana_led_off();
     }   
 }
 
@@ -87,38 +123,68 @@ void led_layer_set(uint32_t state)
     // COMPATIBILITY MODE 
     // if either compatibility mode layeris enabled turn on SUPER key LED
     if ((1<<1 & state) != 0 || (1<<2 & state) != 0) {
-        jis_110r_led_on_meta();
+        meta_led_solid_on();
     }
     else
     {
-        jis_110r_led_off_meta();
+        meta_led_solid_off();
+        meta_led_off();
     }
 
-    // FN
-    if ((1<<6 & state) != 0 || (1<<7 & state) != 0 || (1<<8 & state) != 0 || (1<<15 & state) != 0 || (1<<9 & state) != 0) {
-        jis_110r_led_on_fn();
+    // FN [ 6 & 8 = momentary ] [ 7 & 9 = toggle ]
+    if ((1<<6 & state) != 0 || (1<<8 & state) != 0) {
+        fn_led_animation_on();
+    }
+    else if ((1<<7 & state) != 0 || (1<<9 & state) !=0) {
+        fn_led_solid_on(); 
     }
     else
     {
-        jis_110r_led_off_fn();
+        fn_led_animation_off(); 
+        fn_led_solid_off();
+        fn_led_off();
+    }
+
+    //PASSWORD LAYER
+    if ((1<<15 & state) != 0)
+    {
+        special_led_animation_on();
+    }
+    else
+    {
+        special_led_animation_off();
     }
 
     // MODERN SCROLL LOCK [mouse wheel]
     if ((1<<5 & state) != 0)
     {
-        jis_110r_led_on_scroll_lock();
+        scroll_lock_led_animation_on();
     }
     else
     {
-        jis_110r_led_off_scroll_lock();
+        scroll_lock_led_animation_off();
+        scroll_lock_led_off(); 
     }
 
-    // MOUSE KEYPAD
-    if ((1<<4 & state) != 0) {
-        jis_110r_led_on_keypad();
+    // KEYPAD
+    if ((1<<3 & state) != 0 && (1<<4 & state) == 0) {
+        keypad_led_off();
+        keypad_led_solid_off();
+        keypad_led_animation_on();
     }
-    else
-    {
-        jis_110r_led_off_keypad();
-    }   
+    else if ((1<<3 & state) != 0 && (1<<4 & state) != 0) {
+        keypad_led_off();
+        keypad_led_solid_off();
+        keypad_led_animation_on();
+    }
+    else if ((1<<3 & state) == 0  && (1<<4 & state) != 0) {
+        keypad_led_animation_off();
+        keypad_led_solid_off();
+        keypad_led_solid_on();
+    }    
+    else {
+        keypad_led_off();
+        keypad_led_solid_off();
+        keypad_led_animation_off();
+    }       
 }

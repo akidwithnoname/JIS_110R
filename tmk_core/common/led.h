@@ -15,6 +15,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef LED_H
 #define LED_H
 #include "stdint.h"
+#include <stdbool.h>
 
 
 /* keyboard LEDs */
@@ -28,6 +29,43 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+
+void fn_led_on(void);
+void fn_led_off(void);
+
+void keypad_led_on(void);
+void keypad_led_off(void);
+
+void scroll_lock_led_on(void);
+void scroll_lock_led_off(void);
+
+void num_lock_led_on(void);
+void num_lock_led_off(void);
+ 
+void caps_lock_led_on(void);
+void caps_lock_led_off(void);
+
+void kana_led_on(void);
+void kana_led_off(void);
+
+void meta_led_on(void);
+void meta_led_off(void);
+
+void left_led_on(void);
+void left_led_off(void);
+
+void center_led_on(void);
+void center_led_off(void);
+
+void right_led_on(void);
+void right_led_off(void);
+
+void sleep_led_on(void);
+void sleep_led_off(void);
+
+uint8_t led_brightness_level;
+
 
 void led_set(uint8_t usb_led);
 void led_layer_set(uint32_t state);

@@ -129,7 +129,7 @@ CFLAGS += -fno-inline-small-functions
 CFLAGS += -fpack-struct
 CFLAGS += -fshort-enums
 CFLAGS += -fno-strict-aliasing
-CFLAGS += -Wall
+CFLAGS += -Wall -Wno-comment
 CFLAGS += -Wstrict-prototypes
 #CFLAGS += -mshort-calls
 #CFLAGS += -fno-unit-at-a-time
@@ -163,7 +163,7 @@ CPPFLAGS += -ffunction-sections
 CPPFLAGS += -fdata-sections
 # to supress "warning: only initialized variables can be placed into program memory area"
 CPPFLAGS += -w
-CPPFLAGS += -Wall
+CPPFLAGS += -Wall -Wno-comment
 CPPFLAGS += -Wundef
 #CPPFLAGS += -mshort-calls
 #CPPFLAGS += -fno-unit-at-a-time

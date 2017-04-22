@@ -71,10 +71,13 @@ ifeq (yes, $(strip $(KEYBOARD_LOCK_ENABLE)))
     OPT_DEFS += -DKEYBOARD_LOCK_ENABLE
 endif
 
-ifeq (yes,$(strip $(SLEEP_LED_ENABLE)))
-    SRC += $(COMMON_DIR)/avr/sleep_led.c
-    OPT_DEFS += -DSLEEP_LED_ENABLE
-    OPT_DEFS += -DNO_SUSPEND_POWER_DOWN
+ifeq (yes,$(strip $(LED_PWM_ENABLE)))
+    SRC += $(COMMON_DIR)/avr/led_pwm.c
+    OPT_DEFS += -DLED_PWM_ENABLE
+    ifeq (yes,$(strip $(SLEEP_LED_ENABLE)))
+        OPT_DEFS += -DSLEEP_LED_ENABLE
+        OPT_DEFS += -DNO_SUSPEND_POWER_DOWN
+    endif
 endif
 
 ifeq (yes,$(strip $(BACKLIGHT_ENABLE)))
