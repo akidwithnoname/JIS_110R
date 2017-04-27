@@ -625,7 +625,3 @@ void debug_action(action_t action)
     }
     dprintf("[%X:%02X]", action.kind.param>>8, action.kind.param&0xff);
 }
-
-
-
-

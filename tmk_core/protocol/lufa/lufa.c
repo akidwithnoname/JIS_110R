@@ -660,6 +660,7 @@ int main(void)
             loading_led_animation_off();
         #endif
     #endif
+    led_layer_set(0);
     print("Keyboard start.\n");
     hook_late_init();
     while (1) {
@@ -702,11 +703,12 @@ void hook_usb_suspend_entry(void)
     matrix_clear();
     clear_keyboard();
     #ifdef LED_PWM_ENABLE
-        led_animation_off();
             #ifdef SLEEP_LED_ENABLE
-                sleep_led_animation_on();
-                pwm_timer_enable();
+                led_animation_off();
+                wait_ms(50);
+                //pwm_timer_enable();
             #endif
+            sleep_led_animation_on();
     #endif
 }
 

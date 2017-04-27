@@ -21,6 +21,13 @@ void pwm_timer_init(void);
 void pwm_timer_enable(void);
 void pwm_timer_disable(void);
 
+void led_brightness_min(void);
+void led_brightness_max(void);
+void led_brightness_up(void);
+void led_brightness_up_highres(void);
+void led_brightness_down(void);
+void led_brightness_down_highres(void);
+
 void led_animation_on(void);
 void led_animation_off(void);
 

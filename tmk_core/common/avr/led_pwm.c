@@ -49,13 +49,77 @@ void pwm_timer_disable(void) { TIMSK1 &= ~_BV(OCIE1A); }
 
 
 
-// BRIGHTNESS [ 0 = 0% | 255 = 100% ]
+// LED BRIGHTNESS [ 0 = 0% | 255 = 100% ] -----------------------------------------\
+
 __attribute__((weak))
-uint8_t led_brightness_level = 255;
+uint8_t led_brightness_level = 100;
+
+__attribute__((weak))
+uint8_t led_brightness_step = 25;
+
+__attribute__((weak))
+uint8_t led_brightness_step_highres = 5;
+
+__attribute__((weak))
+uint8_t led_brightness_highres_treshold = 25;
+
+void led_brightness_min(void) { led_brightness_level = 0; }
+
+void led_brightness_max(void) { led_brightness_level = 255; }
 
 
 
-// ALL LED [ but sleep ] ON/OFF FUNCTION ------------------------------------------\
+void led_brightness_up(void) {
+    if ((255 - led_brightness_level) > led_brightness_step)
+        if (led_brightness_level <= led_brightness_highres_treshold)
+            { led_brightness_level = led_brightness_level + led_brightness_step_highres;}
+        else
+            { led_brightness_level = led_brightness_level + led_brightness_step; }
+    else
+        { led_brightness_max(); }
+}
+
+
+
+void led_brightness_down(void) {
+    if ((255 - led_brightness_highres_treshold - led_brightness_level) < (255 - led_brightness_step))
+        if (led_brightness_level <= led_brightness_highres_treshold)
+            { led_brightness_level = led_brightness_level - led_brightness_step_highres;}
+        else if ((led_brightness_level - led_brightness_step) <= led_brightness_highres_treshold)
+            { led_brightness_level = led_brightness_highres_treshold; } 
+        else
+            { led_brightness_level = led_brightness_level - led_brightness_step; }
+    else
+        if ((255 - led_brightness_level) < (255 - led_brightness_step_highres))
+            if (led_brightness_level <= led_brightness_highres_treshold)
+                { led_brightness_level = led_brightness_level - led_brightness_step_highres;}
+            else
+                { led_brightness_min();}
+       else
+           { led_brightness_min();}
+}
+
+
+
+void led_brightness_up_highres(void) {
+    if ((255 - led_brightness_level) > led_brightness_step_highres)
+        { led_brightness_level = led_brightness_level + led_brightness_step_highres; }
+    else
+        { led_brightness_max(); }
+}
+
+
+
+void led_brightness_down_highres(void) {
+    if ((255 - led_brightness_level) < (255 - led_brightness_step_highres))
+        { led_brightness_level = led_brightness_level - led_brightness_step_highres;}
+    else
+        { led_brightness_min();}
+}
+
+
+
+// ALL LED [ except sleep ] ON/OFF FUNCTION ------------------------------------------\
 
 static bool led_animation = true;
 void led_animation_on(void) { led_animation = true; }
@@ -154,7 +218,7 @@ void sleep_led_animation_off(void) { sleep_led_animation = false; }
    [ 0 = 0% | 255 = 100% ]                                                         \
    0-5 for bare LEDs                                                               \
    0-255 for LEDs under keycaps                                                    \
-   Maximum value of blinking_table determined by "led_brightness_level"
+   Maximum value of blinking_table determined by "led_brightness_level"            \
 
 // BLINK ANIMATION TABLE
     static const uint16_t blinking_table[64] PROGMEM = {
@@ -287,7 +351,7 @@ if (led_animation) {
     // META    
     if (meta_led_animation) {
     
-        if (timer.pwm.count == 0 && pgm_read_byte(&blinking_table[timer.pwm.index]) != 0) 
+        if (timer.pwm.count == 0 && pgm_read_byte(&blinking_table[timer.pwm.index]) != 0 && led_brightness_level != 0) 
             { meta_led_on(); }
 
         if (pgm_read_byte(&blinking_table[timer.pwm.index]) >= led_brightness_level && timer.pwm.count == led_brightness_level)
@@ -298,16 +362,11 @@ if (led_animation) {
     }
     
     if (meta_led_solid) {
-        if (led_brightness_level == 255)
+        if (timer.pwm.count == 0 && led_brightness_level != 0) 
             { meta_led_on(); }
-        
-        else {
-            if (timer.pwm.count == 0) 
-                { meta_led_on(); }
 
-            if (timer.pwm.count == led_brightness_level)
-                { meta_led_off(); }
-        }
+        if (timer.pwm.count == led_brightness_level)
+            { meta_led_off(); }
     }
 
 
@@ -315,7 +374,7 @@ if (led_animation) {
     // CAPS LOCK    
     if (caps_lock_led_animation) {
     
-        if (timer.pwm.count == 0 && pgm_read_byte(&blinking_table[timer.pwm.index]) != 0) 
+        if (timer.pwm.count == 0 && pgm_read_byte(&blinking_table[timer.pwm.index]) != 0 && led_brightness_level != 0) 
             { caps_lock_led_on(); }
 
         if (pgm_read_byte(&blinking_table[timer.pwm.index]) >= led_brightness_level && timer.pwm.count == led_brightness_level)
@@ -326,16 +385,11 @@ if (led_animation) {
     }
     
     if (caps_lock_led_solid) {
-        if (led_brightness_level == 255)
+        if (timer.pwm.count == 0 && led_brightness_level != 0) 
             { caps_lock_led_on(); }
-        
-        else {
-            if (timer.pwm.count == 0) 
-                { caps_lock_led_on(); }
 
-            if (timer.pwm.count == led_brightness_level)
-                { caps_lock_led_off(); }
-        }
+        if (timer.pwm.count == led_brightness_level)
+            { caps_lock_led_off(); }
     }
 
 
@@ -343,7 +397,7 @@ if (led_animation) {
     // NUM LOCK    
     if (num_lock_led_animation) {
    
-        if (timer.pwm.count == 0 && pgm_read_byte(&blinking_table[timer.pwm.index]) != 0) 
+        if (timer.pwm.count == 0 && pgm_read_byte(&blinking_table[timer.pwm.index]) != 0 && led_brightness_level !=0 ) 
             { num_lock_led_on(); }
 
         if (pgm_read_byte(&blinking_table[timer.pwm.index]) >= led_brightness_level && timer.pwm.count == led_brightness_level)
@@ -354,16 +408,11 @@ if (led_animation) {
     }
     
     if (num_lock_led_solid) {
-        if (led_brightness_level == 255)
+       if (timer.pwm.count == 0 && led_brightness_level != 0) 
             { num_lock_led_on(); }
-        
-        else {
-           if (timer.pwm.count == 0) 
-                { num_lock_led_on(); }
 
-           if (timer.pwm.count == led_brightness_level)
-                { num_lock_led_off(); }
-        }
+       if (timer.pwm.count == led_brightness_level)
+            { num_lock_led_off(); }
     }
 
     
@@ -371,7 +420,7 @@ if (led_animation) {
     // KEYPAD    
     if (keypad_led_animation) {
     
-        if (timer.pwm.count == 0 && pgm_read_byte(&blinking_table[timer.pwm.index]) != 0) 
+        if (timer.pwm.count == 0 && pgm_read_byte(&blinking_table[timer.pwm.index]) != 0 && led_brightness_level != 0) 
             { keypad_led_on(); }
 
         if (pgm_read_byte(&blinking_table[timer.pwm.index]) >= led_brightness_level && timer.pwm.count == led_brightness_level)
@@ -382,16 +431,11 @@ if (led_animation) {
     }
     
     else if (keypad_led_solid) {
-        if (led_brightness_level == 255)
+        if (timer.pwm.count == 0 && led_brightness_level != 0) 
             { keypad_led_on(); }
-        
-        else {
-            if (timer.pwm.count == 0) 
-                { keypad_led_on(); }
 
-            if (timer.pwm.count == led_brightness_level)
-                { keypad_led_off(); }
-        }
+        if (timer.pwm.count == led_brightness_level)
+            { keypad_led_off(); }
     }
 
 
@@ -399,7 +443,7 @@ if (led_animation) {
     // SCROLL LOCK    
     if (scroll_lock_led_animation) {
     
-        if (timer.pwm.count == 0 && pgm_read_byte(&blinking_table[timer.pwm.index]) != 0)
+        if (timer.pwm.count == 0 && pgm_read_byte(&blinking_table[timer.pwm.index]) != 0 && led_brightness_level != 0)
             { scroll_lock_led_on(); }
 
         if (pgm_read_byte(&blinking_table[timer.pwm.index]) >= led_brightness_level && timer.pwm.count == led_brightness_level)
@@ -410,16 +454,11 @@ if (led_animation) {
     }
     
     else if (scroll_lock_led_solid) {
-        if (led_brightness_level == 255)
-            { scroll_lock_led_on(); } 
-        
-        else {
-            if (timer.pwm.count == 0) 
-                { scroll_lock_led_on(); }
+        if (timer.pwm.count == 0 && led_brightness_level != 0) 
+            { scroll_lock_led_on(); }
 
-            if (timer.pwm.count == led_brightness_level)
-                { scroll_lock_led_off(); }
-        }
+        if (timer.pwm.count == led_brightness_level)
+            { scroll_lock_led_off(); }
     }
 
   
@@ -427,7 +466,7 @@ if (led_animation) {
     // FN 
     if (fn_led_animation) {
     
-        if (timer.pwm.count == 0 && pgm_read_byte(&blinking_table[timer.pwm.index]) != 0)
+        if (timer.pwm.count == 0 && pgm_read_byte(&blinking_table[timer.pwm.index]) != 0 && led_brightness_level != 0)
             { fn_led_on(); }
 
         if (pgm_read_byte(&blinking_table[timer.pwm.index]) >= led_brightness_level && timer.pwm.count == led_brightness_level)
@@ -438,16 +477,11 @@ if (led_animation) {
     }
 
     if (fn_led_solid) {
-        if (led_brightness_level == 255) 
+        if (timer.pwm.count == 0 && led_brightness_level != 0) 
             { fn_led_on(); }
-        
-        else {
-            if (timer.pwm.count == 0) 
-                { fn_led_on(); }
 
-            if (timer.pwm.count == led_brightness_level)
-                { fn_led_off(); }
-        }
+        if (timer.pwm.count == led_brightness_level)
+            { fn_led_off(); }
     }
 
 
@@ -455,7 +489,7 @@ if (led_animation) {
     // KANA    
     if (kana_led_animation) {
     
-        if (timer.pwm.count == 0 && pgm_read_byte(&blinking_table[timer.pwm.index]) != 0) 
+        if (timer.pwm.count == 0 && pgm_read_byte(&blinking_table[timer.pwm.index]) != 0 && led_brightness_level != 0) 
             { kana_led_on(); }
 
         if (pgm_read_byte(&blinking_table[timer.pwm.index]) >= led_brightness_level && timer.pwm.count == led_brightness_level)
@@ -466,16 +500,11 @@ if (led_animation) {
     }
     
     if (kana_led_solid) {
-        if (led_brightness_level == 255) 
+        if (timer.pwm.count == 0 && led_brightness_level != 0) 
             { kana_led_on(); }
-        
-        else {
-            if (timer.pwm.count == 0) 
-                { kana_led_on(); }
 
-            if (timer.pwm.count == led_brightness_level)
-                { kana_led_off(); }
-        }
+        if (timer.pwm.count == led_brightness_level)
+            { kana_led_off(); }
     }
 
 
