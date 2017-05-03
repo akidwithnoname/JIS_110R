@@ -1,0 +1,24 @@
+#!/bin/bash
+
+make -f Makefile
+if [ $? -eq 0 ]
+then
+	echo ""
+	echo "compile successfull, flashing firmware to microcontroller"
+	echo ""
+	echo "  1: Please type password for 'su' (root) then press 'ENTER'"
+	echo "  2: Switch the keyboard's microcontroller into DFU mode to begin flashing firmware"
+	echo ""
+	su -c "../../teensy_loader_cli/teensy_loader_cli --mcu=atmega32u4 -w ./tobi_keypad.hex"
+	if [ $? -eq 0 ]
+	then
+		echo "firmware flash sucessful, keyboard rebooted."
+		exit 0
+	else
+		echo "firmware flash failed, exiting..."
+		exit 1
+	fi
+else
+	echo "compile failed, skipping microcontroller flash and exiting..."
+	exit 1
+fi
