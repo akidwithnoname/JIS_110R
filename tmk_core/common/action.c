@@ -123,7 +123,7 @@ void process_action(keyrecord_t *record)
                   	    dprintf("EVENT PIN: - %d - %u - %x \n", action, action, action);
                   	    sprintf(str_action, "%d", action);
                   	    checkpin(str_action, pin_char_current, pin);
-                    #endif 
+                    #endif
                 } else {
                     unregister_code(action.key.code);
                     if (mods) {

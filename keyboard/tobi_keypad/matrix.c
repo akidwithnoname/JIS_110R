@@ -108,7 +108,7 @@ static void  init_cols(void)
 // Returns status of switches [1=on | 0=off]
 static matrix_row_t read_cols(void)
 {
-    return (PIND&(1<<0) ? 0 : (1<<1)) |
+    return  (PIND&(1<<0) ? 0 : (1<<1)) |
             (PIND&(1<<1) ? 0 : (1<<0)) |
             (PIND&(1<<2) ? 0 : (1<<3)) |
             (PIND&(1<<3) ? 0 : (1<<2)) ;

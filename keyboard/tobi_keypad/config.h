@@ -21,8 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 // USB Device descriptor parameter
-#define VENDOR_ID       0x04d9
-#define PRODUCT_ID      0x2011
+#define VENDOR_ID       0x2761
+#define PRODUCT_ID      0x1ee1
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    [null]
 #define PRODUCT         Tobi Keypad
@@ -55,7 +55,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // key combination for command
 #define IS_COMMAND() ( \
-keyboard_report->mods == (MOD_BIT(KC_P0) | MOD_BIT(KC_PENT)) \
+keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)) \
 )
 
 // Enable action debug
@@ -77,5 +77,7 @@ keyboard_report->mods == (MOD_BIT(KC_P0) | MOD_BIT(KC_PENT)) \
     //#define NO_ACTION_ONESHOT
     //#define NO_ACTION_MACRO
     //#define NO_ACTION_FUNCTION
+
+
 
 #endif
