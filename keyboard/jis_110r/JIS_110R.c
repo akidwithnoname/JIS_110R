@@ -33,58 +33,61 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 // ACTION DEFINITIONS ----------------------------------------------------------------------------------------
 
-// TOGGLE LAYERS
-	#define AC_LRST      ACTION_LAYER_TOGGLE(1)                // Standard                       
-	#define AC_LRGM      ACTION_LAYER_TOGGLE(2)                // Game
+// GAME LAYERS
+	#define AC_LRG1      ACTION_LAYER_TOGGLE(2)                       // Game on
+        #define AC_LRGM      ACTION_FUNCTION(GAME_LAYER)                  // Game/Type toggle
 
-// FN LAYER
-	#define AC_FNNM      ACTION_LAYER_MOMENTARY(6)             // FN MOMENTARY
-	#define AC_FNON      ACTION_LAYER_ON(7, ON_BOTH)           // FN ON
-        #define AC_FNOF      ACTION_LAYER_OFF(7, ON_BOTH)          // FN OFF
+// FN LAYERS
+	#define AC_FNNM      ACTION_LAYER_MOMENTARY(6)                    // FN momentary
+	#define AC_FNON      ACTION_LAYER_ON(7, ON_BOTH)                  // FN on
+        #define AC_FNOF      ACTION_LAYER_OFF(7, ON_BOTH)                 // FN off
 
 // MOUSE KEYPAD
-	#define AC_MSKY      ACTION_LAYER_TOGGLE(4)                // Mouse Keypad
+	#define AC_MSKY      ACTION_LAYER_TOGGLE(4)                       // mouse keypad
 
 // SHIFT HEX KEYPAD
-	#define AC_SHEX      ACTION_LAYER_TAP_KEY(3, KC_PENT)      // Shift HEX Keypad
-	#define AC_HEXF      ACTION_MODS_KEY(MOD_LSFT, KC_F)       // HEX Keypad-[F]
-	#define AC_HEXE      ACTION_MODS_KEY(MOD_LSFT, KC_E)       // HEX Keypad-[E]
-	#define AC_HEXD      ACTION_MODS_KEY(MOD_LSFT, KC_D)       // HEX Keypad-[D]
-	#define AC_HEXC      ACTION_MODS_KEY(MOD_LSFT, KC_C)       // HEX Keypad-[C]
-	#define AC_HEXB      ACTION_MODS_KEY(MOD_LSFT, KC_B)       // HEX Keypad-[B]
-	#define AC_HEXA      ACTION_MODS_KEY(MOD_LSFT, KC_A)       // HEX Keypad-[A]
-	#define AC_HEX6      ACTION_MODS_KEY(MOD_LSFT, KC_6)       // HEX Keypad-[&]
-	#define AC_HEX5      ACTION_MODS_KEY(MOD_LSFT, KC_5)       // HEX Keypad-[%]
-	#define AC_HEX3      ACTION_MODS_KEY(MOD_LSFT, KC_3)       // HEX Keypad-[#]
+	#define AC_SHEX      ACTION_LAYER_TAP_KEY(3, KC_PENT)             // Shift HEX keypad
+	#define AC_HEXF      ACTION_MODS_KEY(MOD_LSFT, KC_F)              // HEX keypad-[F]
+	#define AC_HEXE      ACTION_MODS_KEY(MOD_LSFT, KC_E)              // HEX keypad-[E]
+	#define AC_HEXD      ACTION_MODS_KEY(MOD_LSFT, KC_D)              // HEX keypad-[D]
+	#define AC_HEXC      ACTION_MODS_KEY(MOD_LSFT, KC_C)              // HEX keypad-[C]
+	#define AC_HEXB      ACTION_MODS_KEY(MOD_LSFT, KC_B)              // HEX keypad-[B]
+	#define AC_HEXA      ACTION_MODS_KEY(MOD_LSFT, KC_A)              // HEX keypad-[A]
+	#define AC_HEX6      ACTION_MODS_KEY(MOD_LSFT, KC_6)              // HEX keypad-[&]
+	#define AC_HEX5      ACTION_MODS_KEY(MOD_LSFT, KC_5)              // HEX keypad-[%]
+	#define AC_HEX3      ACTION_MODS_KEY(MOD_LSFT, KC_3)              // HEX keypad-[#]
 
 // DUAL SCROLL LOCK 
-	#define AC_SCLK      ACTION_LAYER_TAP_KEY(5, KC_SLCK)      // Hold Scroll Lock for mouse wheel scrolling
+	#define AC_SCLK      ACTION_LAYER_TAP_KEY(5, KC_SLCK)             // hold Scroll Lock for mouse wheel scrolling
 
-// SHIFT MODS
-	#define AC_SFTM      ACTION_MODS_ONESHOT(MOD_LSFT)         // Tap left shift to activate for 1 keypress
+// LEFT SHIFT MOD
+	#define AC_SFTM      ACTION_MODS_ONESHOT(MOD_LSFT)                // tap left shift to activate for 1 keypress
+
+// CAPS LOCK MOD
+	#define AC_UCAP      ACTION_MODS_KEY(MOD_LSFT, KC_CAPS)           // Shift + Caps Lock
 
 // MACROS
-	#define AC_MGPG      ACTION_MACRO(GPG_KEY)                 // (wget & install shion-os public GPG key)
-	#define AC_MURL      ACTION_MACRO(URL)                     // [null-bin.blogspot.com]
+	#define AC_MGPG      ACTION_MACRO(GPG_KEY)                        // (wget & install shion-os public GPG key)
+	#define AC_MURL      ACTION_MACRO(URL)                            // [null-bin.blogspot.com]
           	
-// LED EFFECTS
-	#define AC_CLAL      ACTION_FUNCTION(CLEAR_AND_LOAD)       // Clear all layers, turn off key locks, and make LEDs dance!
+// CLEAR KEYBOARD
+	#define AC_CLAL      ACTION_FUNCTION(CLEAR_AND_LOAD)              // turn off all layers and USB HID locked keys
 
 // PIN LAYER OFF
-	#define AC_PLOF      ACTION_LAYER_OFF(15, ON_PRESS)        // Set PIN layer off
+	#define AC_PLOF      ACTION_LAYER_OFF(15, ON_PRESS)               // set PIN layer off
 
 // PASSWORDS
-	#define AC_PSW1      ACTION_MACRO(PSW1)                    // [password1]
-	#define AC_PSW2      ACTION_MACRO(PSW2)                    // [password2]
-	#define AC_PSW3      ACTION_MACRO(PSW3)                    // [password3]
+	#define AC_PSW1      ACTION_MACRO(PSW1)                           // [password1]
+	#define AC_PSW2      ACTION_MACRO(PSW2)                           // [password2]
+	#define AC_PSW3      ACTION_MACRO(PSW3)                           // [password3]
 
 // LED BRIGHTNESS
-	#define AC_LEDU      ACTION_FUNCTION(LED_BRIGHTNESS_UP)    // LED BRIGHTNESS INCREASE
-        #define AC_LDUH      ACTION_FUNCTION(LED_BRIGHTNESS_UP_HIGHRES)
-	#define AC_LEDD      ACTION_FUNCTION(LED_BRIGHTNESS_DOWN)  // LED BRIGHTNESS DECREASE
-        #define AC_LDDH      ACTION_FUNCTION(LED_BRIGHTNESS_DOWN_HIGHRES)
-	#define AC_LED1      ACTION_FUNCTION(LED_BRIGHTNESS_MAX)   // LED BRIGHTNESS 100%
-	#define AC_LED0      ACTION_FUNCTION(LED_BRIGHTNESS_MIN)   // LED BRIGHTNESS 0%
+	#define AC_LEDU      ACTION_FUNCTION(LED_BRIGHTNESS_UP)           // LED brightness increase
+        #define AC_LDUH      ACTION_FUNCTION(LED_BRIGHTNESS_UP_HIGHRES)   // LED brightness increase (small step)
+	#define AC_LEDD      ACTION_FUNCTION(LED_BRIGHTNESS_DOWN)         // LED brightness decrease 
+        #define AC_LDDH      ACTION_FUNCTION(LED_BRIGHTNESS_DOWN_HIGHRES) // LED brightness decrease (small step)
+	#define AC_LED1      ACTION_FUNCTION(LED_BRIGHTNESS_MAX)          // LED brightness 100%
+	#define AC_LED0      ACTION_FUNCTION(LED_BRIGHTNESS_MIN)          // LED brightness 0%
 
 
 		  	 
@@ -97,6 +100,7 @@ enum function_id {
         LED_BRIGHTNESS_DOWN_HIGHRES,
         LED_BRIGHTNESS_MAX,
         LED_BRIGHTNESS_MIN,
+        GAME_LAYER,
 };
 
 
@@ -115,6 +119,13 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
     if (id == LED_BRIGHTNESS_MAX)  { if (record->event.pressed) { led_brightness_max(); }}
 
     if (id == LED_BRIGHTNESS_MIN)  { if (record->event.pressed) { led_brightness_min(); }}
+
+    if (id == GAME_LAYER) { 
+        if (record->event.pressed) {
+            layer_invert(1);
+            layer_off(2);
+        }
+    }
 
     if (id == CLEAR_AND_LOAD) {
 
@@ -144,6 +155,7 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
 
 	}
 }
+
 
 
 
@@ -238,7 +250,7 @@ const action_t PROGMEM actionmaps[][MATRIX_ROWS][MATRIX_COLS] = {
       | |-----------------------------------------------------------|     ,---.     |---------------| |       \
       | | SHIFT  | Z | X | C | V | B | N | M | , | . | / | \ |SHIFT |     |UP |     | 1 | 2 | 3 |ENT| |       \
       | |-----------------------------------------------------------| ,-----------. |------------ / | |       \
-      | |CAP |OS |ALT |MHEN| BS |ENT |SPACE |HENK|KANA|ALT |FN |CTRL| |LEF|DOW|RIG| |   0   | . |HEX| |       \
+      | |CAP |OS |ALT |MHN| BS |ENT | SPACE |HENK|KANA|ALT |FN |CTRL| |LEF|DOW|RIG| |   0   | . |HEX| |       \
       | `-----------------------------------------------------------' `-----------' `---------------' |       \
       `----------------------------------------------------------------------------------------------'        \
                                                                                                               /
@@ -248,40 +260,13 @@ const action_t PROGMEM actionmaps[][MATRIX_ROWS][MATRIX_COLS] = {
     TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,NO,  NO,  DEL, END, PGDN,P7,  P8,  P9,   \
     LCTL,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,BSLS,ENT, NO,  NO,  NO,  NO,  P4,  P5,  P6,   \
     LSFT,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,RO,  RSFT,NO,  NO,  NO,  UP,  NO,  P1,  P2,  P3,   \
-    CAPS,LGUI,LALT,MHEN,BSPC,ENT, SPC, HENK,KANA,RALT,FNNM,RCTL,NO,  NO,  NO,  LEFT,DOWN,RGHT,P0  ,PDOT,SHEX),\
+    UCAP,LGUI,LALT,MHEN,BSPC,ENT, SPC, HENK,KANA,RALT,FNNM,RCTL,NO,  NO,  NO,  LEFT,DOWN,RGHT,P0  ,PDOT,SHEX),\
 
   
-// LAYER 1: Standard -----------------------------------------------------------------------------------------\
+// LAYER 1: Game ---------------------------------------------------------------------------------------------\
       ,-----------------------------------------------------------------------------------------------.       \
       | ,---.   ,---------------. ,---------------. ,---------------. ,-----------.        f i l c o  |       \
-      | |ESC|   |   |   |   |   | |   |   |   |   | |   |   |   |   | |   |   |   |                   |       \
-      | `---'   `---------------' `---------------' `---------------' `-----------'       o   o   o   |       \
-      | ,-----------------------------------------------------------. ,-----------. ,---------------. |       \
-      | | ~ |   |   |   |   |   |   |   |   |   |   |   |   |   |   | |   |   |   | |   |   |   |   | |       \
-      | |-----------------------------------------------------------| |-----------| |---------------| |       \
-      | |     |   |   |   |   |   |   |   |   |   |   |   |   |     | |   |   |   | |   |   |   |   | |       \
-      | |------------------------------------------------------     | `-----------' |------------   | |       \
-      | | CAPS |   |   |   |   |   |   |   |   |   |   |   |   |    |               |   |   |   |   | |       \
-      | |-----------------------------------------------------------|     ,---.     |---------------| |       \
-      | |        |   |   |   |   |   |   |   |   |   |   |   |      |     |   |     |   |   |   |   | |       \
-      | |-----------------------------------------------------------| ,-----------. |------------   | |       \
-      | |CTRL|   |    |    |    |    |      |    |    |    |   |    | |   |   |   | |       |   |   | |       \
-      | `-----------------------------------------------------------' `-----------' `---------------' |       \
-      `-----------------------------------------------------------------------------------------------'       \
-                                                                                                              /
-  [1] = ACTIONMAP_JIS_110R(                                                                                   \
-    ESC, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
-    ZKHK,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
-    TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
-    CAPS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
-    TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
-    LCTL,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS),\
-
-
-// LAYER 2: Game ---------------------------------------------------------------------------------------------\
-      ,-----------------------------------------------------------------------------------------------.       \
-      | ,---.   ,---------------. ,---------------. ,---------------. ,-----------.        f i l c o  |       \
-      | |[-]|   |   |   |   |   | |   |   |   |   | |   |   |   |   | |   |   |   |                   |       \
+      | | ` |   |   |   |   |   | |   |   |   |   | |   |   |   |   | |   |   |   |                   |       \
       | `---'   `---------------' `---------------' `---------------' `-----------'       o   o   o   |       \
       | ,-----------------------------------------------------------. ,-----------. ,---------------. |       \
       | |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | |   |   |   | |   |   |   |   | |       \
@@ -292,17 +277,44 @@ const action_t PROGMEM actionmaps[][MATRIX_ROWS][MATRIX_COLS] = {
       | |-----------------------------------------------------------|     ,---.     |---------------| |       \
       | |        |   |   |   |   |   |   |   |   |   |   |   |      |     |   |     |   |   |   |   | |       \
       | |-----------------------------------------------------------| ,-----------. |------------   | |       \
-      | |CTRL|[-]|    |SPCE| {[ | ]} | ENT  |    |    |    |   |    | |   |   |   | |       |   |   | |       \
+      | |CAP |[G]|ALT | [ | ]  |   SPACE    |  / | \  |ALT |FN |CTRL| |   |   |   | |       |   |   | |       \
+      | `-----------------------------------------------------------' `-----------' `---------------' |       \
+      `-----------------------------------------------------------------------------------------------'       \
+                                                                                                              /
+  [1] = ACTIONMAP_JIS_110R(                                                                                   \
+    NO,  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
+    TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
+    TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
+    TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
+    TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
+    TRNS,LRG1,TRNS,RBRC,BSLS,SPC, SPC, SLSH,RO,  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS),\
+
+
+// LAYER 2: Game/Type ----------------------------------------------------------------------------------------\
+      ,-----------------------------------------------------------------------------------------------.       \
+      | ,---.   ,---------------. ,---------------. ,---------------. ,-----------.        f i l c o  |       \
+      | |A/J|   |   |   |   |   | |   |   |   |   | |   |   |   |   | |   |   |   |                   |       \
+      | `---'   `---------------' `---------------' `---------------' `-----------'       o   o   o   |       \
+      | ,-----------------------------------------------------------. ,-----------. ,---------------. |       \
+      | |   |   |   |   |   |   |   |   |   |   |   |   |   |   |   | |   |   |   | |   |   |   |   | |       \
+      | |-----------------------------------------------------------| |-----------| |---------------| |       \
+      | |     |   |   |   |   |   |   |   |   |   |   |   |   |     | |   |   |   | |   |   |   |   | |       \
+      | |------------------------------------------------------     | `-----------' |------------   | |       \
+      | |      |   |   |   |   |   |   |   |   |   |   |   |   |    |               |   |   |   |   | |       \
+      | |-----------------------------------------------------------|     ,---.     |---------------| |       \
+      | |        |   |   |   |   |   |   |   |   |   |   |   |      |     |   |     |   |   |   |   | |       \
+      | |-----------------------------------------------------------| ,-----------. |------------   | |       \
+      | |CAP |[G]|ALT |MHN| BS |ENT | SPACE |HENK|KANA|ALT |FN |CTRL| |   |   |   | |       |   |   | |       \
       | `-----------------------------------------------------------' `-----------' `---------------' |       \
       `-----------------------------------------------------------------------------------------------'       \
                                                                                                               /
   [2] = ACTIONMAP_JIS_110R(                                                                                   \
-    NO,  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
-    ESC, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
+    ZKHK,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
     TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
-    LCTL,TRNS,NO,  TRNS,SPC, RBRC,BSLS,ENT, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS),\
+    TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
+    TRNS,TRNS,TRNS,MHEN,BSPC,ENT, SPC, HENK,KANA,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS),\
 
 
 // LAYER 3: Shift HEX Keypad ---------------------------------------------------------------------------------\
@@ -319,7 +331,7 @@ const action_t PROGMEM actionmaps[][MATRIX_ROWS][MATRIX_COLS] = {
       | |-----------------------------------------------------------|     ,---.     |---------------| |       \
       | |        |   |   |   |   |   |   |   |   |   |   |   |      |     |   |     | A | B | C |   | |       \
       | |-----------------------------------------------------------| ,-----------. |------------   | |       \
-      | |    |   |    |    |    |    |      |    |    |    |   |    | |   |   |   | | SPACE | x |   | |       \
+      | |    |   |    |   |    |    |       |    |    |    |   |    | |   |   |   | | SPACE | x |   | |       \
       | `-----------------------------------------------------------' `-----------' `---------------' |       \
       `-----------------------------------------------------------------------------------------------'       \
                                                                                                               /
@@ -346,7 +358,7 @@ const action_t PROGMEM actionmaps[][MATRIX_ROWS][MATRIX_COLS] = {
       | |-----------------------------------------------------------|     ,---.     |---------------| |       \
       | |        |   |   |   |   |   |   |   |   |   |   |   |      |     |   |     |[X]|[X]|[X]|   | |       \
       | |-----------------------------------------------------------| ,-----------. |------------SCD| |       \
-      | |    |   |    |    |    |    |      |    |    |    |   |    | |   |   |   | |   LCL |RCL|   | |       \
+      | |    |   |    |   |    |    |       |    |    |    |   |    | |   |   |   | |   LCL |RCL|   | |       \
       | `-----------------------------------------------------------' `-----------' `---------------' |       \
       `-----------------------------------------------------------------------------------------------'       \
                                                                                                               /
@@ -373,7 +385,7 @@ const action_t PROGMEM actionmaps[][MATRIX_ROWS][MATRIX_COLS] = {
       | |-----------------------------------------------------------|     ,---.     |---------------| |       \
       | |        |   |   |   |   |   |   |   |   |   |   |   |      |     |   |     |   |   |   |   | |       \
       | |-----------------------------------------------------------| ,-----------. |------------   | |       \
-      | |    |   |    |    |    |    |      |    |    |    |   |    | |   |   |   | |       |   |   | |       \
+      | |    |   |    |   |    |    |       |    |    |    |   |    | |   |   |   | |       |   |   | |       \
       | `-----------------------------------------------------------' `-----------' `---------------' |       \
       `-----------------------------------------------------------------------------------------------'       \
                                                                                                               /
@@ -400,7 +412,7 @@ const action_t PROGMEM actionmaps[][MATRIX_ROWS][MATRIX_COLS] = {
       | |-----------------------------------------------------------|     ,---.     |---------------| |       \
       | |        |   |   |   |   |   |   |   |   |   |URL|   |      |     |   |     |   |   |   |   | |       \
       | |-----------------------------------------------------------| ,-----------. |------------   | |       \
-      | |    |GM |    |    |    |    |CLEAR |    | US |MENU|   |    | |   |   |   | |       |   |   | |       \
+      | |    |GM |    |   |    |    | CLEAR |    | US |MENU|   |    | |   |   |   | |       |   |   | |       \
       | `-----------------------------------------------------------' `-----------' `---------------' |       \
       `-----------------------------------------------------------------------------------------------'       \
                                                                                                               /
@@ -410,7 +422,7 @@ const action_t PROGMEM actionmaps[][MATRIX_ROWS][MATRIX_COLS] = {
     NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  LED0,LEDD,LDDH,NO,  NO,  NO,   \
     NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  FNON,NO,  NO,  NO,  NO,  NO,  NO,  NO,   \
     NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  MURL,NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,   \
-    NO,  LRGM,NO,  NO,  NO,  NO,  CLAL,NO,  LRST,APP, TRNS,NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO),  \
+    NO,  LRGM,NO,  NO,  NO,  NO,  CLAL,NO,  FNOF,APP, TRNS,NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO,  NO),  \
 
 
 // LAYER 7: FN [LOCKED] --------------------------------------------------------------------------------------\
@@ -427,7 +439,7 @@ const action_t PROGMEM actionmaps[][MATRIX_ROWS][MATRIX_COLS] = {
       | |-----------------------------------------------------------|     ,---.     |---------------| |       \
       | |        |   |   |   |   |   |   |   |   |   |URL|   |      |     |   |     |   |   |   |   | |       \
       | |-----------------------------------------------------------| ,-----------. |------------   | |       \
-      | |    |GM |    |    |    |    |CLEAR |    | US |MENU|   |    | |   |   |   | |       |   |   | |       \
+      | |    |GM |    |   |    |    | CLEAR |    | US |MENU|   |    | |   |   |   | |       |   |   | |       \
       | `-----------------------------------------------------------' `-----------' `---------------' |       \
       `-----------------------------------------------------------------------------------------------'       \
                                                                                                               /
@@ -437,7 +449,7 @@ const action_t PROGMEM actionmaps[][MATRIX_ROWS][MATRIX_COLS] = {
     FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,LED0,LEDD,LDDH,FNOF,FNOF,FNOF, \
     FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,NO,  FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF, \
     FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,MURL,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF, \
-    FNOF,LRGM,FNOF,FNOF,FNOF,FNOF,CLAL,FNOF,LRST,APP, TRNS,TRNS,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF),\
+    FNOF,LRGM,FNOF,FNOF,FNOF,FNOF,CLAL,FNOF,FNOF,APP, TRNS,TRNS,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF,FNOF),\
 
 
 //                        ||
@@ -471,7 +483,7 @@ const action_t PROGMEM actionmaps[][MATRIX_ROWS][MATRIX_COLS] = {
       | |-----------------------------------------------------------|     ,---.     |---------------| |       \
       | |        |   |   |   |   |   |   |   |   |   |   |   |      |     |   |     | P1| P2| P3|   | |       \
       | |-----------------------------------------------------------| ,-----------. |------------   | |       \
-      | |    |   |    |    |    |    |      |    |    |    |   |    | |   |   |   | |       |   |   | |       \
+      | |    |   |    |   |    |    |       |    |    |    |   |    | |   |   |   | |       |   |   | |       \
       | `-----------------------------------------------------------' `-----------' `---------------' |       \
       `-----------------------------------------------------------------------------------------------'       \
                                                                                                               /
