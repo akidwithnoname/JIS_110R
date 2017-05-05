@@ -4,21 +4,38 @@ make -f Makefile
 if [ $? -eq 0 ]
 then
 	echo ""
-	echo "compile successfull, flashing firmware JIS_110R.hex to microcontroller"
-	echo ""
-	echo "  1: Please type password for 'su' (root) then press 'ENTER'"
-	echo "  2: Switch the keyboard's microcontroller into DFU mode to begin flashing firmware"
-	echo ""
-	su -c "../../teensy_loader_cli/teensy_loader_cli --mcu=at90usb1286 -w ./JIS_110R.hex"
-	if [ $? -eq 0 ]
+	echo "compile successfull"
+	if [ "$(id -u)" = "0" ]
 	then
-		echo "firmware flash sucessful, keyboard rebooted."
-		exit 0
+		echo ""
+		echo "flashing firmware JIS_110R.hex to microcontroller"
+		echo ""
+		echo "switch the keyboard's microcontroller into DFU mode to begin flashing firmware"
+		echo "waiting for DFU mode..."
+		../../teensy_loader_cli/teensy_loader_cli --mcu=at90usb1286 -w ./JIS_110R.hex
+		if [ $? -eq 0 ]
+		then
+			
+			echo ""
+			echo "firmware flash sucessful, keyboard rebooting..."
+			echo ""
+			exit 0
+		else
+			echo ""
+			echo "firmware flash failed, exiting..."
+			echo ""
+			exit 1
+		fi
 	else
-		echo "firmware flash failed, exiting..."
+		echo ""
+		echo "only root user may flash microcontroller, please run again as root, exiting..."
+		echo ""
+
 		exit 1
 	fi
 else
+	echo ""
 	echo "compile failed, skipping microcontroller flash and exiting..."
+	echo ""
 	exit 1
 fi
