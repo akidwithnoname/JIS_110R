@@ -112,6 +112,7 @@ void led_set(uint8_t usb_led)
         caps_lock_led_off();
     }
 
+/*
     // KANA 
     if (usb_led & (1<<USB_LED_KANA))
     {
@@ -122,7 +123,7 @@ void led_set(uint8_t usb_led)
         kana_led_solid_off();
         kana_led_off();
     } 
-
+*/  
 }
 
 
@@ -131,31 +132,33 @@ void led_set(uint8_t usb_led)
 
 void led_layer_set(uint32_t state) 
 {
-    // GAME
+    // GAME 
     if ((1<<2 & state) != 0) {
-        meta_led_solid_off();
-        meta_led_animation_on();
-    }
-    else if ((1<<1 & state) != 0) 
-    {
-        meta_led_solid_on();
-        meta_led_animation_off();
+         meta_led_solid_on();
     }
     else
     {
         meta_led_solid_off();
-        meta_led_animation_off();
         meta_led_off();
     }
 
+    // US 
+    if ((1<<1 & state) != 0) {
+         kana_led_solid_off();
+         kana_led_off();
+    }
+    else
+    {
+        kana_led_solid_on();
+    }
+
+
     // FN [ 6 & 8 = momentary ] [ 7 & 9 = toggle ]
     if ((1<<6 & state) != 0 || (1<<8 & state) != 0) {
-        fn_led_animation_off();
-        fn_led_solid_on();
+        fn_led_animation_on();
     }
     else if ((1<<7 & state) != 0 || (1<<9 & state) !=0) {
-        fn_led_solid_off();
-        fn_led_animation_on(); 
+        fn_led_solid_on(); 
     }
     else
     {
