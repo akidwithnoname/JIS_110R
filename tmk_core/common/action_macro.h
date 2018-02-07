@@ -106,6 +106,7 @@ enum macro_command_id{
 /* clear modifier(s) */
 #define CM()            CLEAR()
 
+
 /* for backward comaptibility */
 #define MD(key)         DOWN(KC_##key)
 #define MU(key)         UP(KC_##key)

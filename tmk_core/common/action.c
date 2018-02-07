@@ -104,7 +104,7 @@ void process_action(keyrecord_t *record)
     dprint(" default_layer_state: "); default_layer_debug();
 #endif
     dprintln();
-
+		hook_key_function(event.pressed);
     switch (action.kind.id) {
         /* Key and Mods */
         case ACT_LMODS:
@@ -112,6 +112,7 @@ void process_action(keyrecord_t *record)
             {
                 uint8_t mods = (action.kind.id == ACT_LMODS) ?  action.key.mods :
                                                                 action.key.mods<<4;
+//		hook_key_function(event.pressed);
                 if (event.pressed) {
                     if (mods) {
                         add_weak_mods(mods);

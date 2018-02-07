@@ -656,8 +656,8 @@ int main(void)
         pwm_timer_enable();
         #ifdef LED_BOOT_ANIMATION
             loading_led_animation_on();
-            wait_ms(1400);
-            loading_led_animation_off();
+            //wait_ms(1400);
+            //loading_led_animation_off();
         #endif
     #endif
     led_layer_set(0);
@@ -679,6 +679,7 @@ int main(void)
     }
 }
 
+//loading_led_animation_off();
 
 /* hooks */
 __attribute__((weak))
@@ -705,8 +706,6 @@ void hook_usb_suspend_entry(void)
     #ifdef LED_PWM_ENABLE
             #ifdef SLEEP_LED_ENABLE
                 led_animation_off();
-                wait_ms(50);
-                //pwm_timer_enable();
             #endif
             sleep_led_animation_on();
     #endif

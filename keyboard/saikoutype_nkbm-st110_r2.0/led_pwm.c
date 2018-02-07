@@ -29,7 +29,6 @@ Based on tmk_core/common/avr/sleep_led.c:
 #include "led_pwm.h"
 
 
-
 // TIMER --------------------------------------------------------------------------\
 
 #define SLEEP_LED_TIMER_TOP F_CPU/(256*64)
@@ -44,10 +43,16 @@ void pwm_timer_init(void)
     OCR1AL = SLEEP_LED_TIMER_TOP&0xff;
     SREG = sreg;
 }
-void pwm_timer_enable(void) { TIMSK1 |= _BV(OCIE1A); }
+void pwm_timer_enable(void) { TIMSK1 |= _BV(OCIE1A); } 
 void pwm_timer_disable(void) { TIMSK1 &= ~_BV(OCIE1A); }
 
 
+// COUNTERS -----------------------------------------------------------------------\
+
+uint16_t loading_animation_counter = 0;
+uint16_t special_animation_counter = 0;
+uint16_t typing_animation_counter = 0;
+uint16_t keypress_animation_counter = 0;
 
 // LED BRIGHTNESS [ 0 = 0% | 255 = 100% ] -----------------------------------------\
 
@@ -123,7 +128,15 @@ void led_brightness_down_highres(void) {
 
 static bool led_animation = true;
 void led_animation_on(void) { led_animation = true; }
-void led_animation_off(void) { led_animation = false; }
+void led_animation_off(void) { led_animation = false; 
+    keypad_led_off();
+    meta_led_off();
+    caps_lock_led_off();
+    num_lock_led_off();
+    kana_led_off();
+    fn_led_off();
+    scroll_lock_led_off();
+}
 
 
 
@@ -195,22 +208,22 @@ void kana_led_solid_off(void) { kana_led_solid = false; }
 // SPECIAL ANIMATION
 static bool special_led_animation = false;
 void special_led_animation_on(void) { special_led_animation = true; }
-void special_led_animation_off(void) { special_led_animation = false; }
+void special_led_animation_off(void) { special_led_animation = false; left_led_off(); center_led_off(); right_led_off(); }
 
 // LOADING ANIMATION
 static bool loading_led_animation = false;
 void loading_led_animation_on(void) { loading_led_animation = true; }
-void loading_led_animation_off(void) { loading_led_animation = false; }
+void loading_led_animation_off(void) { loading_led_animation = false; left_led_off(); center_led_off(); right_led_off(); }
 
 // TYPING ANIMATION
 static bool typing_led_animation = false;
 void typing_led_animation_on(void) { typing_led_animation = true; }
-void typing_led_animation_off(void) { typing_led_animation = false; }
+void typing_led_animation_off(void) { typing_led_animation = false; left_led_off(); center_led_off(); right_led_off(); }
 
 // SLEEP ANIMATION 
 static bool sleep_led_animation = false; 
 void sleep_led_animation_on(void) { sleep_led_animation = true; }       
-void sleep_led_animation_off(void) { sleep_led_animation = false; }
+void sleep_led_animation_off(void) { sleep_led_animation = false; left_led_off(); center_led_off(); right_led_off(); }
 
 
 
@@ -222,10 +235,10 @@ void sleep_led_animation_off(void) { sleep_led_animation = false; }
 
 // BLINK ANIMATION TABLE
     static const uint16_t blinking_table[64] PROGMEM = {
-    255, 255, 255, 255, 0,   0,   0,   0,   255, 255, 255, 255, 0,   0,   0,   0,
-    255, 255, 255, 255, 0,   0,   0,   0,   255, 255, 255, 255, 0,   0,   0,   0,
-    255, 255, 255, 255, 0,   0,   0,   0,   255, 255, 255, 255, 0,   0,   0,   0,
-    255, 255, 255, 255, 0,   0,   0,   0,   255, 255, 255, 255, 0,   0,   0,   0
+    75,  255, 255, 255, 255, 75,  0,   0,   75,  255, 255, 255, 255, 75,  0,   0,
+    75,  255, 255, 255, 255, 75,  0,   0,   75,  255, 255, 255, 255, 75,  0,   0,
+    75,  255, 255, 255, 255, 75,  0,   0,   75,  255, 255, 255, 255, 75,  0,   0,
+    75,  255, 255, 255, 255, 75,  0,   0,   75,  255, 255, 255, 255, 75,  0,   0
     };
 
 // SLEEP ANIMATION TABLE
@@ -306,7 +319,6 @@ void sleep_led_animation_off(void) { sleep_led_animation = false; }
     };
 
 
-
 // SOFTWARE PWM -------------------------------------------------------------------\
                                                                                    \
     ______           ______           __                                           \
@@ -341,8 +353,8 @@ ISR(TIMER1_COMPA_vect)
     } timer = { .row = 0 };
 
     timer.row++;
-    
-  
+
+      
  
 if (led_animation) {
 
@@ -511,7 +523,9 @@ if (led_animation) {
 
     // SPECIAL ANIMATION
     if (special_led_animation) {
-    
+   
+	if (special_animation_counter == 0) { timer.row = 0; }
+
         if (timer.pwm.count == 0 && pgm_read_byte(&special_left_table[timer.pwm.index]) != 0)
             { left_led_on(); }
 
@@ -529,12 +543,17 @@ if (led_animation) {
             
         if (timer.pwm.count == pgm_read_byte(&special_right_table[timer.pwm.index]))
             { right_led_off(); }
-    }
 
+	special_animation_counter++;
+
+    }
+    else { special_animation_counter = 0; }
 
 
     // LOADING ANIMATION
     if (loading_led_animation) {
+	
+        if (loading_animation_counter == 0) {  timer.row = 0; }    
     
         if (timer.pwm.count == 0 && pgm_read_byte(&loading_left_table[timer.pwm.index]) != 0)
             { left_led_on(); }
@@ -553,6 +572,13 @@ if (led_animation) {
         
         if (timer.pwm.count == pgm_read_byte(&loading_right_table[timer.pwm.index]))
            { right_led_off(); }
+
+	loading_animation_counter++;
+
+	if (loading_animation_counter >= 32500) {
+	    loading_animation_counter = 0;
+	    loading_led_animation_off(); }
+		        
     }
 
 
@@ -560,6 +586,8 @@ if (led_animation) {
     // TYPING ANIMATION
     if (typing_led_animation) {
     
+	if (typing_animation_counter == 0) { timer.row = 0; }
+
         if (timer.pwm.count == 0 && pgm_read_byte(&typing_left_table[timer.pwm.index]) != 0)
             { left_led_on(); }
 
@@ -577,14 +605,19 @@ if (led_animation) {
 
         if (timer.pwm.count == pgm_read_byte(&typing_right_table[timer.pwm.index]))
             { right_led_off(); }
+
+	typing_animation_counter++;
+
     }
+    else { typing_animation_counter = 0; }
+    
 }
 
-
+else { led_animation_off(); }
 
     // SLEEP ANIMATION    
     if (sleep_led_animation) {
-    
+
         if (timer.pwm.count == 0 && pgm_read_byte(&ping_table[timer.pwm.index]) != 0)
             { sleep_led_on(); }
 
