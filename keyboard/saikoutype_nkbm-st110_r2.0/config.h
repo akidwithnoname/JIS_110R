@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define MATRIX_HAS_GHOST
 
 // Set tap speed in ms 
-#define TAPPING_TERM 100
+#define TAPPING_TERM 150
 
 // Set number of taps required to toggle a key, 1=2 
 #define TAPPING_TOGGLE 1
