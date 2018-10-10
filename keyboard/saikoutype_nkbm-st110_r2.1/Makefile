@@ -1,5 +1,11 @@
 # Target file name (without extension).
-TARGET ?= JIS_110R
+
+TARGET ?= NKBM-ST110
+#TARGET ?= NKBM-ST110_RK9000v2-US
+
+# keymap
+SRC := NKBM-ST110.c $(SRC)
+#SRC := NKBM-ST110_RK9000v2-US.c $(SRC)
 
 # Directory common source filess exist
 TMK_DIR ?= ../../tmk_core
@@ -74,14 +80,24 @@ CONSOLE_ENABLE ?= yes	    # Console for debug(+400)
 COMMAND_ENABLE ?= yes       # Commands for debug and configuration
 LED_PWM_ENABLE ?= yes	    # PWM LEDs for animations and brightness control
 SLEEP_LED_ENABLE ?= yes     # Breathing sleep LED during USB suspend
-NKRO_ENABLE ?= yes	        # USB Nkey Rollover
+NKRO_ENABLE ?= yes	    # USB Nkey Rollover
 ACTIONMAP_ENABLE ?= yes	    # Use 16bit action codes in keymap instead of 8bit key codes
+RN42_BT_ENABLE ?= yes       # [!_ALPHA_!] Enable RN42 bluetooth expansion module support
 
-#
-# Keymap file
-#
-SRC := JIS_110R.c $(SRC)
+ifeq (yes,$(strip $(RN42_BT_ENABLE)))
+    SRC += main.c
+    SRC += uart.c
+    SRC += rn42-bt-module.c
+endif
 
+ifeq (yes,$(strip $(LED_PWM_ENABLE)))
+    SRC += led_pwm.c
+    OPT_DEFS += -DLED_PWM_ENABLE
+    ifeq (yes,$(strip $(SLEEP_LED_ENABLE)))
+        OPT_DEFS += -DSLEEP_LED_ENABLE
+        OPT_DEFS += -DNO_SUSPEND_POWER_DOWN
+    endif
+endif
 
 # Optimize size but this may cause error "relocation truncated to fit"
 #EXTRALDFLAGS = -Wl,--relax

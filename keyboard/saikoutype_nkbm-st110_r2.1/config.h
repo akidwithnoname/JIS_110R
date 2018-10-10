@@ -1,5 +1,5 @@
 /*
-Copyright 2017 Yuki Sakatoi A.K.A. [null] <null.bin.pc@gmail.com>
+Copyright 2018 Yuki Sakatoi A.K.A. [null] <null.bin.pc@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,18 +25,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT_ID      0x2011
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    [null]
-#define PRODUCT         Filco Majestouch JIS 110R
-#define DESCRIPTION     Filco Majestouch JIS 110R
+#define PRODUCT         SaikouType 110
+#define DESCRIPTION     SaikouType 110
 
 // matrix size 
-#define MATRIX_ROWS 6
-#define MATRIX_COLS 21
+#define MATRIX_ROWS 8
+#define MATRIX_COLS 15
 
 // define if matrix has ghost
 //#define MATRIX_HAS_GHOST
 
 // Set tap speed in ms 
-#define TAPPING_TERM 100
+#define TAPPING_TERM 150
 
 // Set number of taps required to toggle a key, 1=2 
 #define TAPPING_TOGGLE 1
@@ -64,7 +64,7 @@ keyboard_report->mods == (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT)) \
 // Boot animation enable
 #define LED_BOOT_ANIMATION
 
-// Feature disable options ------------------------------------------------------------------------------------------
+// Feature disable options ----------------------------------------------------------------------------------------------
 
 // disable debug print
     //#define NO_DEBUG

@@ -192,10 +192,10 @@ static bool command_common(uint8_t code)
             // test breathing sleep LED
             print("Sleep LED test\n");
             if (sleep_led_test) {
-                sleep_led_animation_off();
+                usb_nc_led_animation_off();
                 led_set(host_keyboard_leds());
             } else {
-                sleep_led_animation_on();
+                usb_nc_led_animation_on();
                 pwm_timer_enable();
             }
             sleep_led_test = !sleep_led_test;

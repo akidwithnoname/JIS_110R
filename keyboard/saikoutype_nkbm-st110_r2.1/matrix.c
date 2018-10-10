@@ -1,5 +1,5 @@
 /*
-Copyright 2017 Yuki Sakatoi A.K.A. [null] <null.bin.pc@gmail.com>
+Copyright 2018 Yuki Sakatoi A.K.A. [null] <null.bin.pc@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -94,16 +94,14 @@ matrix_row_t matrix_get_row(uint8_t row)
 
 
 // Column pin configuration
-// col  0   1   2   3   4   5   6   7   8   9   10  11  12  13  14  15  16  17  18  19  20 
-// pin: C5  C4  C3  C2  C1  C0  B3  B2  D7  D5  D4  D3  D2  D1  D0  B7  C6  B1  B4  B5  B6
+// col  0   1   2   3   4   5   6   7   8   9   10  11  12  13  14 
+// pin: FO  F1  F2  F3  F4  F5  F6  F7  C0  C1  C2  C3  C4  C5  C6
 
 static void  init_cols(void)
 {
     // Input with pull-up
-    DDRB  &= ~(1<<1 | 1<<2 | 1<<3 | 1<<4 | 1<<5 | 1<<6 | 1<<7);
-    PORTB |=  (1<<1 | 1<<2 | 1<<3 | 1<<4 | 1<<5 | 1<<6 | 1<<7);
-    DDRD  &= ~(1<<0 | 1<<1 | 1<<2 | 1<<3 | 1<<4 | 1<<5 | 1<<7);
-    PORTD |=  (1<<0 | 1<<1 | 1<<2 | 1<<3 | 1<<4 | 1<<5 | 1<<7);
+    DDRF  &= ~(1<<0 | 1<<1 | 1<<2 | 1<<3 | 1<<4 | 1<<5 | 1<<6 | 1<<7);
+    PORTF |=  (1<<0 | 1<<1 | 1<<2 | 1<<3 | 1<<4 | 1<<5 | 1<<6 | 1<<7);
     DDRC  &= ~(1<<0 | 1<<1 | 1<<2 | 1<<3 | 1<<4 | 1<<5 | 1<<6);
     PORTC |=  (1<<0 | 1<<1 | 1<<2 | 1<<3 | 1<<4 | 1<<5 | 1<<6);
     
@@ -112,38 +110,32 @@ static void  init_cols(void)
 // Returns status of switches [1=on | 0=off]
 static matrix_row_t read_cols(void)
 {
-    return (PINC&(1<<5) ? 0 : (1<<0)) |
-           (PINC&(1<<4) ? 0 : (1<<1)) |
-           (PINC&(1<<3) ? 0 : (1<<2)) |
-           (PINC&(1<<2) ? 0 : (1<<3)) |
-           (PINC&(1<<1) ? 0 : (1<<4)) |
-           (PINC&(1<<0) ? 0 : (1<<5)) |
-           (PINB&(1<<3) ? 0 : (1<<6)) |
-           (PINB&(1<<2) ? 0 : (1<<7)) |
-           (PIND&(1<<7) ? 0 : (1<<8)) |
-           (PIND&(1<<5) ? 0 : (1<<9)) |
-           (PIND&(1<<4) ? 0 : (1<<10)) |
-           (PIND&(1<<3) ? 0 : (1<<11)) |
-           (PIND&(1<<2) ? 0 : (1<<12)) |
-           (PIND&(1<<1) ? 0 : (1<<13)) |
-           (PIND&(1<<0) ? 0 : (1UL<<14)) |
-           (PINB&(1<<7) ? 0 : (1UL<<15)) |
-           (PINC&(1<<6) ? 0 : (1UL<<16)) |
-           (PINB&(1<<1) ? 0 : (1UL<<17)) |
-           (PINB&(1<<4) ? 0 : (1UL<<18)) |
-           (PINB&(1<<6) ? 0 : (1UL<<19)) |
-           (PINB&(1<<5) ? 0 : (1UL<<20));
+    return (PINF&(1<<0) ? 0 : (1<<0)) |
+           (PINF&(1<<1) ? 0 : (1<<1)) |
+           (PINF&(1<<2) ? 0 : (1<<2)) |
+           (PINF&(1<<3) ? 0 : (1<<3)) |
+           (PINF&(1<<4) ? 0 : (1<<4)) |
+           (PINF&(1<<5) ? 0 : (1<<5)) |
+           (PINF&(1<<6) ? 0 : (1<<6)) |
+           (PINF&(1<<7) ? 0 : (1<<7)) |
+           (PINC&(1<<0) ? 0 : (1<<8)) |
+           (PINC&(1<<1) ? 0 : (1<<9)) |
+           (PINC&(1<<2) ? 0 : (1<<10)) |
+           (PINC&(1<<3) ? 0 : (1<<11)) |
+           (PINC&(1<<4) ? 0 : (1<<12)) |
+           (PINC&(1<<5) ? 0 : (1<<13)) |
+           (PINC&(1<<6) ? 0 : (1UL<<14));          
 }
 
 // Row pin configuration
-// row: 0   1   2   3   4   5
-// pin: F2  F7  F4  F5  F6  F3
+// row: 0   1   2   3   4   5   6   7
+// pin: A0  A1  A2  A3  A4  A5  A6  A7
 
 static void unselect_rows(void)
 {
     // Hi-Z to unselect
-    DDRF  &= ~0b11111111;
-    PORTF &= ~0b11111111;
+    DDRA  &= ~0b11111111;
+    PORTA &= ~0b11111111;
 }
 
 static void select_row(uint8_t row)
@@ -151,31 +143,37 @@ static void select_row(uint8_t row)
     // Output low to select
     switch (row) {
         case 0:
-            DDRF  |= (1<<2);
-            PORTF &= ~(1<<2);
+            DDRA  |= (1<<0);
+            PORTA &= ~(1<<0);
             break;
         case 1:
-            DDRF  |= (1<<7);
-            PORTF &= ~(1<<7);
+            DDRA  |= (1<<1);
+            PORTA &= ~(1<<1);
             break;
         case 2:
-            DDRF  |= (1<<4);
-            PORTF &= ~(1<<4);
+            DDRA  |= (1<<2);
+            PORTA &= ~(1<<2);
             break;
         case 3:
-            DDRF  |= (1<<5);
-            PORTF &= ~(1<<5);
+            DDRA  |= (1<<3);
+            PORTA &= ~(1<<3);
             break;
         case 4:
-            DDRF  |= (1<<6);
-            PORTF &= ~(1<<6);
+            DDRA  |= (1<<4);
+            PORTA &= ~(1<<4);
             break;
         case 5:
-            DDRF  |= (1<<3);
-            PORTF &= ~(1<<3);
+            DDRA  |= (1<<5);
+            PORTA &= ~(1<<5);
+            break;
+        case 6:
+            DDRA  |= (1<<6);
+            PORTA &= ~(1<<6);
+            break;
+        case 7:
+            DDRA  |= (1<<7);
+            PORTA &= ~(1<<7);
             break;
     }
 }
-
-
 

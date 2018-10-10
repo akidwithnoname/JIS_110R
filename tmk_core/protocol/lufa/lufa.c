@@ -35,6 +35,11 @@
   arising out of or in connection with the use or performance of
   this software.
 */
+#include "uart.h"
+#include <avr/io.h>
+#include <avr/pgmspace.h>
+#include <stdint.h>
+
 
 #include "report.h"
 #include "host.h"
@@ -82,7 +87,6 @@ host_driver_t lufa_driver = {
     send_system,
     send_consumer
 };
-
 
 /*******************************************************************************
  * Console
@@ -418,6 +422,19 @@ static uint8_t keyboard_leds(void)
 
 static void send_keyboard(report_keyboard_t *report)
 {
+/*
+	uart_putchar(0xFD);            // rn42 raw mode 
+	uart_putchar(0x09);            // length
+	uart_putchar(0x01);            // descriptor
+	uart_putchar(report->mods);    // modifier
+	uart_putchar(0x00); 
+	uart_putchar(report->keys[0]); // scancode 1
+	uart_putchar(report->keys[1]); // scancode 2
+	uart_putchar(report->keys[2]); // scancode 3
+	uart_putchar(report->keys[3]); // scancode 4
+	uart_putchar(report->keys[4]); // scancode 5
+	uart_putchar(report->keys[5]); // scancode 6
+*/
     uint8_t timeout = 255;
 
     if (USB_DeviceState != DEVICE_STATE_Configured)
@@ -443,7 +460,7 @@ static void send_keyboard(report_keyboard_t *report)
         Endpoint_SelectEndpoint(KEYBOARD_IN_EPNUM);
 
         /* Check if write ready for a polling interval around 10ms */
-        while (timeout-- && !Endpoint_IsReadWriteAllowed()) _delay_us(40);
+        while (timeout-- && !Endpoint_IsReadWriteAllowed()) _delay_us(80);
         if (!Endpoint_IsReadWriteAllowed()) return;
 
         /* Write Keyboard Report Data */
@@ -705,9 +722,9 @@ void hook_usb_suspend_entry(void)
     clear_keyboard();
     #ifdef LED_PWM_ENABLE
             #ifdef SLEEP_LED_ENABLE
-                led_animation_off();
+              //  led_animation_off();
             #endif
-            sleep_led_animation_on();
+           // usb_nc_led_animation_on();
     #endif
 }
 
@@ -725,9 +742,9 @@ void hook_usb_wakeup(void)
 {
     suspend_wakeup_init();
     #ifdef LED_PWM_ENABLE
-        #ifdef SLEEP_LED_ENABLE
-            sleep_led_animation_off();
-        #endif
+    //    #ifdef SLEEP_LED_ENABLE
+    //        usb_nc_led_animation_off();
+    //    #endif
         led_animation_on();
     #endif
     // Restore LED status

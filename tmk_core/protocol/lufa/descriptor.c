@@ -41,6 +41,8 @@
 #include "descriptor.h"
 
 
+
+uint16_t usb_switch = 0;
 /*******************************************************************************
  * HID Report Descriptors
  ******************************************************************************/
@@ -226,6 +228,8 @@ const USB_Descriptor_HIDReport_Datatype_t PROGMEM NKROReport[] =
 /*******************************************************************************
  * Device Descriptors
  ******************************************************************************/
+
+
 const USB_Descriptor_Device_t PROGMEM DeviceDescriptor =
 {
     .Header                 = {.Size = sizeof(USB_Descriptor_Device_t), .Type = DTYPE_Device},
@@ -237,7 +241,6 @@ const USB_Descriptor_Device_t PROGMEM DeviceDescriptor =
 
     .Endpoint0Size          = FIXED_CONTROL_ENDPOINT_SIZE,
 
-    /* specified in config.h */
     .VendorID               = VENDOR_ID,
     .ProductID              = PRODUCT_ID,
     .ReleaseNumber          = DEVICE_VER,
