@@ -1,5 +1,5 @@
 /*
-Copyright 2018 Yuki Sakatoi A.K.A. [null] <null.bin.pc@gmail.com>
+Copyright 2018 Yuki Rea <null-src.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

@@ -1,5 +1,5 @@
 /*
-Copyright 2017 Yuki Sakatoi A.K.A. [null] <null.bin.pc@gmail.com>
+Copyright 2017 Yuki Rea <null-src.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -13,11 +13,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-Based on tmk_core/common/avr/sleep_led.c:
-<https://github.com/tmk/tmk_core/blob/master/common/avr/sleep_led.c>
 */
-
 
 #ifndef LED_H
 #define LED_H

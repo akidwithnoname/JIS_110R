@@ -1,11 +1,6 @@
 # Target file name (without extension).
 
-TARGET ?= NKBM-ST110
-#TARGET ?= NKBM-ST110_RK9000v2-US
-
-# keymap
-SRC := NKBM-ST110.c $(SRC)
-#SRC := NKBM-ST110_RK9000v2-US.c $(SRC)
+TARGET ?= NKBM-ST110_firmware
 
 # Directory common source filess exist
 TMK_DIR ?= ../../tmk_core
@@ -61,11 +56,6 @@ OPT_DEFS += -DINTERRUPT_CONTROL_ENDPOINT
 
 
 # Boot Section Size in *bytes*
-#   Teensy halfKay   512
-#   Teensy++ halfKay 1024
-#   Atmel DFU loader 4096
-#   LUFA bootloader  4096
-#   USBaspLoader     2048
 BOOTLOADER_SIZE ?= 1024
 OPT_DEFS += -DBOOTLOADER_SIZE=$(BOOTLOADER_SIZE)
 
@@ -89,6 +79,11 @@ ifeq (yes,$(strip $(RN42_BT_ENABLE)))
     SRC += uart.c
     SRC += rn42-bt-module.c
 endif
+
+
+# keymap
+SRC := NKBM-ST110_MAJESTOUCH-JIS.c $(SRC)
+#SRC := NKBM-ST110_RK9000v2-US.c $(SRC)
 
 ifeq (yes,$(strip $(LED_PWM_ENABLE)))
     SRC += led_pwm.c
